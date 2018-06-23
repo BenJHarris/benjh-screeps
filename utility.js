@@ -4,6 +4,7 @@
 
 module.exports = {
 
+
     getObjectArrayById: function(idArray) {
 
         objArray = [];

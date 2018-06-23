@@ -7,8 +7,6 @@ const rolerun = require ('rolerun') ;
 const manageMemory = require ('manageMemory');
 const spawnRun = require ('spawnRun');
 
-const utility = require ('utility');
-
 module.exports.loop = () => {
 
     manageMemory();
@@ -16,17 +14,12 @@ module.exports.loop = () => {
 
     for (let name in Game.rooms) {
 
-
-
         rolerun();
         spawnRun();
 
         let room = Game.rooms[name];
         if (!room.controller.safeMode) {
             room.controller.activateSafeMode();
-        }
-
-        for (let src in room.memory['findSources']) {
         }
 
     }

@@ -10,12 +10,20 @@ module.exports = {
 
         const name = room.name;
         const sources = room.findSources();
+        const roomMem = Memory.rooms[name];
 
-        Memory.rooms[name] = {
-            init: true,
-            sources: utility.getIdArrayByObjects(sources),
-            harvestSpots: sources.map(s => s.pos.countFreeSpace()).reduce((total, sc) => total + sc)
+        if (!roomMem['sources']) roomMem['sources'] = {};
+
+        for (let source of sources) {
+            let sourceId = source.id;
+            roomMem['sources'][sourceId] = source.pos.countFreeSpace();
         }
+
+
+
+        //flag to say that room memory has been initialised
+        Memory.rooms[name]['init'] = true
+
 
     }
 

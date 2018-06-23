@@ -10,19 +10,17 @@ module.exports = () => {
      */
     RoomPosition.prototype.countFreeSpace = function() {
 
-        let freeSpaceCount = 0;
+        let freeSpaceCount = 8;
 
         for (let x = -1; x <= 1;  x++) {
             for (let y = -1; y <= 1; y++) {
                 if (x !== 0 && y !== 0 ) {
                     let rp = new RoomPosition(this.x + x, this.y + y, this.roomName);
-                    let surroundings = rp.look();
 
-                    if (surroundings.length > 0) {
-                        for (let object in surroundings) {
-                            if (!OBSTACLE_OBJECT_TYPES.indexOf(object.type) >= 0) {
-                                freeSpaceCount++
-                            }
+                    for (let obs of OBSTACLE_OBJECT_TYPES) {
+                        if (rp.lookFor(obs).length > 0 ) {
+                            freeSpaceCount--;
+                            break;
                         }
                     }
                 }
