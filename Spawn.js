@@ -6,18 +6,15 @@ module.exports = () => {
 
     StructureSpawn.prototype.spawnHarvester = function() {
 
-        if (this.spawnCreep(this.room.config().harvester.body, `c${Memory.creepCount}`, {dryRun: true}) == 0) {
-            this.spawnCreep(this.room.config().harvester.body, `c${Memory.creepCount++}`, {
+        if (this.spawnCreep(this.room.getConfig().harvester.body, `c${Memory.creepCount}`, {dryRun: true}) == 0) {
+            this.spawnCreep(this.room.getConfig().harvester.body, `c${Memory.creepCount++}`, {
                 memory: {
                     role: 'harvester',
-                    source: () => {
-                    },
+                    source: (() => this.room.leastAssignedSource().id)(),
                     status: 'mov_to_source',
-                    home: this.id}
+                    home: this.id
+                }
             });
         }
-
     }
-
-
 };

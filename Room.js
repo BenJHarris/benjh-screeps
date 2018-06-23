@@ -17,7 +17,7 @@ module.exports = () => {
         return this.findSources().reduce((min, source) => source.getAssignedCreeps() < min.getAssignedCreeps() ? source : min);
     };
 
-    Room.prototype.config = function() {
+    Room.prototype.getConfig = function() {
         return config.getForLevel(this.controller.level);
     }
 

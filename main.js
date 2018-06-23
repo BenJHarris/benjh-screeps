@@ -1,7 +1,7 @@
 require ('prototypes')();
 
-const rolerun = require ('rolerun') ;
 const manageMemory = require ('manageMemory');
+const rolerun = require ('rolerun') ;
 const spawnRun = require ('spawnRun');
 
 module.exports.loop = () => {

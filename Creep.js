@@ -24,6 +24,26 @@ module.exports = () => {
 
     Creep.prototype.setStatus = function(status) {
         this.memory.status = status;
+    };
+
+    Creep.prototype.moveToTarget = function(target) {
+        let result =  this.moveTo(target);
+        if (this.pos.inRangeTo(target.pos, 1)) {
+            return 1
+        } else {
+            return result;
+        }
+    };
+
+    Creep.prototype.moveToController = function(target) {
+        let result =  this.moveTo(target);
+        if (this.pos.inRangeTo(target.pos, 3)) {
+            return 1
+        } else {
+            return result;
+        }
     }
+
+
 
 };

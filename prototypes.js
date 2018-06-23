@@ -3,6 +3,7 @@
  */
 
 require('Creep')();
+
 require('Spawn')();
 require('Room')();
 require('RoomPosition')();
