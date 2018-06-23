@@ -14,22 +14,27 @@ module.exports = () => {
 
         for (let x = -1; x <= 1;  x++) {
             for (let y = -1; y <= 1; y++) {
-                if (x !== 0 && y !== 0 ) {
+                if (!(x == 0 && y == 0)) {
                     let rp = new RoomPosition(this.x + x, this.y + y, this.roomName);
+                    let tileContents = rp.look();
+                    for (let obj of tileContents) {
 
-                    for (let obs of OBSTACLE_OBJECT_TYPES) {
-                        if (rp.lookFor(obs).length > 0 ) {
-                            freeSpaceCount--;
-                            break;
+                        switch(obj['type']) {
+                            case('creep'):
+                                break;
+                            case('terrain'):
+                                let terrainType = obj['terrain'];
+                                if (terrainType === 'wall') {
+                                    freeSpaceCount--;
+                                }
+                                break;
+                            case('structure'):
+                                break;
                         }
                     }
                 }
             }
         }
-
         return freeSpaceCount;
-
     }
-
-
 };
