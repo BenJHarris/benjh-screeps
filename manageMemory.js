@@ -7,6 +7,7 @@ const roomMemory = require('roomMemory');
 
 module.exports = () => {
 
+    creepMemory.init();
     creepMemory.run();
 
     for (let name in Game.rooms) {

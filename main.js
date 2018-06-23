@@ -1,7 +1,4 @@
-require('Creep')();
-require('Spawn')();
-require('Room')();
-require('RoomPosition')();
+require ('prototypes')();
 
 const rolerun = require ('rolerun') ;
 const manageMemory = require ('manageMemory');
