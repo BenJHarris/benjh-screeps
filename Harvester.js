@@ -9,6 +9,7 @@ module.exports =
         constructor(creep) {
             this.creep = creep;
             this.memory = creep.memory;
+            this.run();
         }
 
         moveToSource() {
@@ -45,7 +46,9 @@ module.exports =
 
             switch (this.memory.status) {
                 case ('mov_to_source'):
-                    this.moveToSource();
+                    if(this.moveToSource() > 0) {
+                        this.creep.setStatus('harvesting');
+                    }
                     break;
 
                 case ('harvesting'):

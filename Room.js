@@ -10,15 +10,29 @@ module.exports = () => {
         return this.find(FIND_SOURCES);
     };
 
+    Room.prototype.findSpawns = function() {
+        return this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN});
+    };
+
     Room.prototype.leastAssignedSource = function() {
-        this.findSources().map((source) => {
-            console.log(source.getAssignedCreeps());
-        });
-        return this.findSources().reduce((min, source) => source.getAssignedCreeps() < min.getAssignedCreeps() ? source : min);
+        return this.findSources().reduce((min, source) =>
+            source.getAssignedCreeps().length < min.getAssignedCreeps().length ? source : min);
+    };
+
+    Room.prototype.getLevel = function() {
+        return this.controller.level;
     };
 
     Room.prototype.getConfig = function() {
-        return config.getForLevel(this.controller.level);
+        return config.getForLevel(this.getLevel());
+    };
+
+    Room.prototype.structureCount = function(type, includeConstruction=false) {
+        let total = this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == type});
+        if (includeConstruction) {
+            total += this.find(FIND_MY_CONSTRUCTION_SITES, {filter: (s) => s.structureType == type})
+        }
+        return total;
     }
 
 };

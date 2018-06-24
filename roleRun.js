@@ -2,7 +2,7 @@
  * Created by Benjamin Jed Harris on 22/06/2018.
  */
 
-const Harvester = require('Creep.harvester');
+const Harvester = require('Harvester');
 
 module.exports = () => {
 
@@ -11,7 +11,6 @@ module.exports = () => {
         switch (creep.memory.role) {
             case 'harvester':
                 let harvester = new Harvester(creep);
-                harvester.run();
                 break;
         }
     }
