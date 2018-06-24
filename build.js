@@ -23,14 +23,14 @@ module.exports = {
         while(!positionFound) {
 
             for (; x < length; x += 2) {
-                if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) == OK) {
+                if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) === OK) {
                     positionFound = true;
                 }
             }
 
             if (!positionFound) {
                 for (; y < length; y += 2) {
-                    if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) == OK) {
+                    if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) === OK) {
                         positionFound = true;
                     }
                 }
@@ -38,7 +38,7 @@ module.exports = {
 
             if (!positionFound) {
                 for (; x > 0; x -= 2) {
-                    if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) == OK) {
+                    if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) === OK) {
                         positionFound = true;
                     }
                 }
@@ -46,7 +46,7 @@ module.exports = {
 
             if (!positionFound) {
                 for (; y > 0; y -= 2) {
-                    if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) == OK) {
+                    if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) === OK) {
                         positionFound = true;
                     }
                 }
