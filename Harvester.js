@@ -52,17 +52,17 @@ module.exports =
                     break;
 
                 case ('harvesting'):
-                    if (this.creep.carry[RESOURCE_ENERGY] == this.creep.carryCapacity) {
+                    if (this.creep.carry[RESOURCE_ENERGY] === this.creep.carryCapacity) {
                         this.creep.setStatus('mov_to_cont');
                     } else {
-                        this.creep.harvestSource();
+                        this.harvestSource();
                     }
                     break;
 
                 case ('mov_to_cont'):
-                    if (this.creep.upgradeController(this.creep.room.controller) === ERR_NOT_IN_RANGE) {
-                        this.creep.moveTo(this.creep.room.controller);
-                    } else if(this.creep.carry[RESOURCE_ENERGY] == 0) {
+                    if (this.upgradeController() === ERR_NOT_IN_RANGE) {
+                        this.moveToController();
+                    } else if(this.creep.carry[RESOURCE_ENERGY] === 0) {
                         this.creep.setStatus('mov_to_source');
                     }
                     break;

@@ -26,11 +26,13 @@ rcl1 = {
 rcl2 =  {
     harvester: {
         body: [WORK, CARRY, CARRY, MOVE, MOVE]
-    }
+    },
+    buildPriority: [STRUCTURE_EXTENSION]
 };
 
 rcl3 = {
     harvester: {
-        body: [WORK, CARRY, CARRY, MOVE, MOVE]
-    }
+        body: [WORK, CARRY, CARRY, MOVE, MOVE],
+    },
+    buildPriority: [STRUCTURE_EXTENSION, STRUCTURE_CONTAINER, STRUCTURE_TOWER, STRUCTURE_RAMPART, STRUCTURE_WALL]
 };

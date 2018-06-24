@@ -8,10 +8,6 @@ const build = require ('build');
 module.exports.loop = () => {
 
     manageMemory();
-
-
-
-
     for (let name in Game.rooms) {
 
         roleRun();

@@ -3,6 +3,7 @@
  */
 
 const config = require ('config');
+const _ = require ('lodash');
 
 module.exports = () => {
 
@@ -11,7 +12,7 @@ module.exports = () => {
     };
 
     Room.prototype.findSpawns = function() {
-        return this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == STRUCTURE_SPAWN});
+        return this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType === STRUCTURE_SPAWN});
     };
 
     Room.prototype.leastAssignedSource = function() {
@@ -28,11 +29,18 @@ module.exports = () => {
     };
 
     Room.prototype.structureCount = function(type, includeConstruction=false) {
-        let total = this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType == type});
+        let total = this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType === type});
         if (includeConstruction) {
-            total += this.find(FIND_MY_CONSTRUCTION_SITES, {filter: (s) => s.structureType == type})
+            total += this.find(FIND_MY_CONSTRUCTION_SITES, {filter: (s) => s.structureType === type})
         }
         return total;
+    };
+
+    Room.prototype.getBuildList = function() {
+        let constructionSites = this.find(FIND_MY_CONSTRUCTION_SITES);
+        let buildPriority = this.getConfig().buildPriority;
+
+        return constructionSites.sort((a, b) => buildPriority.indexOf(a) - buildPriority.indexOf(b));
     }
 
 };
