@@ -27,12 +27,18 @@ rcl2 =  {
     harvester: {
         body: [WORK, CARRY, CARRY, MOVE, MOVE]
     },
+    miner: {
+        body: [WORK, WORK, WORK, WORK, WORK, MOVE]
+    },
     buildPriority: [STRUCTURE_EXTENSION]
 };
 
 rcl3 = {
     harvester: {
         body: [WORK, CARRY, CARRY, MOVE, MOVE],
+    },
+    miner: {
+        body: [WORK, WORK, WORK, WORK, WORK, MOVE]
     },
     buildPriority: [STRUCTURE_EXTENSION, STRUCTURE_CONTAINER, STRUCTURE_TOWER, STRUCTURE_RAMPART, STRUCTURE_WALL]
 };

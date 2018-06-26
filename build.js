@@ -6,10 +6,6 @@ module.exports = {
 
     extension: (room) => {
 
-        if (!room.structureCount(STRUCTURE_EXTENSION) < CONTROLLER_STRUCTURES['extension'][room.getLevel()]) {
-            return -1;
-        }
-
 
         let firstSpawn = room.findSpawns()[0];
         let startX = firstSpawn.pos.x - 1;

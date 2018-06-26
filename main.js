@@ -3,23 +3,19 @@ require ('prototypes')();
 const manageMemory = require ('manageMemory');
 const roleRun = require ('roleRun') ;
 const spawnRun = require ('spawnRun');
-const build = require ('build');
+const buildRun = require ('buildRun');
 
 module.exports.loop = () => {
 
     manageMemory();
     for (let name in Game.rooms) {
+        let room = Game.rooms[name];
 
         roleRun();
         spawnRun();
-
-        let room = Game.rooms[name];
+        buildRun(room);
 
         build.extension(room);
-
-        // room.find(FIND_MY_CONSTRUCTION_SITES).map((s) => {
-        //     s.remove();
-        // });
 
         if (!room.controller.safeMode) {
             room.controller.activateSafeMode();
