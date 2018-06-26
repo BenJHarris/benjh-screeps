@@ -8,14 +8,13 @@ const buildRun = require ('buildRun');
 module.exports.loop = () => {
 
     manageMemory();
+    roleRun();
+
     for (let name in Game.rooms) {
+
         let room = Game.rooms[name];
-
-        roleRun();
-        spawnRun();
+        spawnRun(room);
         buildRun(room);
-
-        build.extension(room);
 
         if (!room.controller.safeMode) {
             room.controller.activateSafeMode();

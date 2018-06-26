@@ -6,10 +6,13 @@ const build = require('build');
 
 module.exports = (room) => {
 
-    if (!room.structureCount(STRUCTURE_EXTENSION) < CONTROLLER_STRUCTURES['extension'][room.getLevel()]) {
+    // check if there is enough extensions otherwise build more
+    if (room.structureCount(STRUCTURE_EXTENSION) < CONTROLLER_STRUCTURES['extension'][room.getLevel()]) {
+        console.log(room.structureCount(STRUCTURE_EXTENSION));
+        console.log(CONTROLLER_STRUCTURES['extension'][room.getLevel()]);
         build.extension(room);
     }
-    
+
 
 
 };

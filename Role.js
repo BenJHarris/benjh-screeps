@@ -3,6 +3,9 @@
  */
 
 module.exports =
+    /**
+     * abstract class for all creep roles
+     */
     class Role {
 
         constructor(creep) {

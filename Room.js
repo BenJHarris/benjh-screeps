@@ -3,6 +3,7 @@
  */
 
 const config = require ('config');
+const constants = require('constants');
 
 module.exports = () => {
 
@@ -27,10 +28,11 @@ module.exports = () => {
         return config.getForLevel(this.getLevel());
     };
 
-    Room.prototype.structureCount = function(type, includeConstruction=false) {
-        let total = this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType === type});
+    Room.prototype.structureCount = function(type, includeConstruction=true) {
+        let total = 0;
+        total += this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType === type}).length;
         if (includeConstruction) {
-            total += this.find(FIND_MY_CONSTRUCTION_SITES, {filter: (s) => s.structureType === type})
+            total += this.find(FIND_MY_CONSTRUCTION_SITES, {filter: (s) => s.structureType === type}).length
         }
         return total;
     };
@@ -40,6 +42,13 @@ module.exports = () => {
         let buildPriority = this.getConfig().buildPriority;
 
         return constructionSites.sort((a, b) => buildPriority.indexOf(a) - buildPriority.indexOf(b));
-    }
+    };
 
+    Room.prototype.getMode = function() {
+        if (this.controller.ticksToDowngrade < 1000) {
+            return constants.ROOM_MODE_CONTROLLER
+        } else {
+            return constants.ROOM_MODE_NORMAL;
+        }
+    }
 };
