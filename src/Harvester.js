@@ -20,52 +20,21 @@ module.exports =
 
         constructor(creep) {
             super(creep);
-        }
-
-        dropOffEnergy() {
-            let target = this.findClosestEnergyDropOff();
-            if (!target) {
-                return -1;
+            if (!this.memory) {
+                this.memory = {}
             }
-
-            if (this.moveToTarget(target) > 0) {
-                this.transferEnergyToTarget(target);
+            if (!this.memory.status) {
+                this.memory.status = 'mov_to_source';
             }
-        }
-
-        build() {
-            let buildList = this.creep.room.getBuildList();
-            if (buildList.length === 0) {
-                return -1;
-            } else {
-                let target = buildList[0];
-
-                if (this.moveToTarget(target) > 0) {
-                    this.creep.build(target);
-                }
+            if (!this.memory.source) {
+                this.memory.source = this.creep.room.leastAssignedSource().id
             }
+            this.run();
         }
 
         run() {
 
-            const state = this.memory.status;
-
-            // if (state === Harvester.MOVE_TO_SOURCE) {
-            //     if (this.moveToSource() > 0) {
-            //         this.harvestSource();
-            //         this.setStatus(Harvester.HARVESTING);
-            //     }
-            // } else if (state === Harvester.HARVESTING) {
-            //     if (this.isFull()) {
-            //         if (this.creep.room.getMode() === constants.ROOM_MODE_NORMAL) {
-            //             if (this.dropOffEnergy < 0) {
-            //                 if (this.build() < 0) {
-            //
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
+            let state = this.memory.status;
 
             if (state === 'mov_to_source') {
                 if (this.moveToSource() > 0) {

@@ -11,7 +11,6 @@ module.exports =
         constructor(creep) {
             this.creep = creep;
             this.memory = creep.memory;
-            this.run();
         }
 
         setStatus(status) {
