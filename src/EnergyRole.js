@@ -37,8 +37,8 @@ module.exports =
     }
 
     moveToTarget(target) {
-        super.moveToTarget(target);
-        
+        return super.moveToTarget(target);
+
     }
 
     transferEnergyToTarget(target) {
