@@ -47,7 +47,7 @@ module.exports =
     }
 
     findClosestEnergyDropOff() {
-        return this.creep.findClosestByRange(FIND_MY_STRUCTURES, {
+        return this.creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {
             filter: (s) => {
                 return (s.structureType === STRUCTURE_SPAWN ||
                     s.structureType === STRUCTURE_EXTENSION) &&
