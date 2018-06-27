@@ -112,6 +112,7 @@ module.exports =
                 }
             } else if (state === Harvester.BUILD_STRUCTURE) {
                 if (!this.isEmpty()) {
+                    console.log('here');
                     this.buildStructure(target);
                 } else {
                     this.setTarget(source);
