@@ -21,7 +21,7 @@ module.exports = {
             memory.sources[sourceId] = source.pos.countFreeSpace();
         }
 
-        if (!'roadsPlaced' in memory) {
+        if (!('roadsPlaced' in memory)) {
             memory.roadsPlaced = false;
         }
         //flag to say that room memory has been initialised
