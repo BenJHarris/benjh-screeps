@@ -2,6 +2,8 @@
  * Created by Benjamin Jed Harris on 22/06/2018.
  */
 
+const Harvester = require('harvester');
+
 module.exports = () => {
 
     StructureSpawn.prototype.spawnHarvester = function() {
@@ -9,8 +11,9 @@ module.exports = () => {
         let config = this.room.getConfig().harvester;
         let body = config.body;
         let memory = {
+            status: 'mov_to_source',
             role: 'harvester',
-            source: () => this.room.leastAssignedSource().id
+            source: (() => this.room.leastAssignedSource().id)()
         };
 
         this.spawnCustom(body, memory)

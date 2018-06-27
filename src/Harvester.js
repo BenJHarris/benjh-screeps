@@ -24,10 +24,25 @@ module.exports =
 
         dropOffEnergy() {
             let target = this.findClosestEnergyDropOff();
+            if (!target) {
+                return -1;
+            }
 
             if (this.moveToTarget(target) > 0) {
                 this.transferEnergyToTarget(target);
-                this.setStatus(Harvester.TRANSFER_ENERGY);
+            }
+        }
+
+        build() {
+            let buildList = this.creep.room.getBuildList();
+            if (buildList.length === 0) {
+                return -1;
+            } else {
+                let target = buildList[0];
+
+                if (this.moveToTarget(target) > 0) {
+                    this.creep.build(target);
+                }
             }
         }
 
@@ -35,18 +50,22 @@ module.exports =
 
             const state = this.memory.status;
 
-            if (state === Harvester.MOVE_TO_SOURCE) {
-                if (this.moveToSource() > 0) {
-                    this.harvestSource();
-                    this.setStatus(Harvester.HARVESTING);
-                }
-            } else if (state === Harvester.HARVESTING) {
-                if (this.isFull()) {
-                    if (this.creep.room.getMode() === constants.ROOM_MODE_NORMAL) {
-                        this.dropOffEnergy();
-                    }
-                }
-            }
+            // if (state === Harvester.MOVE_TO_SOURCE) {
+            //     if (this.moveToSource() > 0) {
+            //         this.harvestSource();
+            //         this.setStatus(Harvester.HARVESTING);
+            //     }
+            // } else if (state === Harvester.HARVESTING) {
+            //     if (this.isFull()) {
+            //         if (this.creep.room.getMode() === constants.ROOM_MODE_NORMAL) {
+            //             if (this.dropOffEnergy < 0) {
+            //                 if (this.build() < 0) {
+            //
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             if (state === 'mov_to_source') {
                 if (this.moveToSource() > 0) {
