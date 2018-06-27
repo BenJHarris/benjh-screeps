@@ -33,7 +33,6 @@ module.exports =
                 console.log(this.memory.source);
                 this.memory.target = this.memory.source;
             }
-            console.log(this.memory.target);
             this.run();
         }
 
@@ -59,6 +58,7 @@ module.exports =
             } else if (roomMode === constants.ROOM_MODE_FLEE) {
 
             }
+            console.log(target);
             let targetId = target.id;
             this.setTarget(targetId);
         }
