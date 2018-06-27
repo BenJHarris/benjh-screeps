@@ -11,19 +11,15 @@ module.exports =
      */
     class Harvester extends EnergyRole {
 
-        static get MOVE_TO_SOURCE() {return 0}
+        static get MOVE_TO_TARGET() {return 0}
         static get HARVESTING() {return 1}
-        static get MOVE_TO_TARGET() {return 2}
-        static get TRANSFER_ENERGY() {return 3}
-        static get UPGRADE_CONTROLLER() {return 4}
-        static get BUILD_STRUCTURE() {return 5}
+        static get TRANSFER_ENERGY() {return 2}
+        static get UPGRADE_CONTROLLER() {return 3}
+        static get BUILD_STRUCTURE() {return 4}
 
 
         constructor(creep) {
             super(creep);
-            if (!this.memory) {
-                this.memory = {}
-            }
             if (!this.memory.status) {
                 this.memory.status = Harvester.MOVE_TO_TARGET;
             }
