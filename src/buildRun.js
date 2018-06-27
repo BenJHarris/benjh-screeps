@@ -6,11 +6,17 @@ const build = require('build');
 
 module.exports = (room) => {
 
-    // check if there is enough extensions otherwise build more
-    if (room.structureCount(STRUCTURE_EXTENSION) < CONTROLLER_STRUCTURES['extension'][room.getLevel()]) {
-        build.extension(room);
-    }
 
-    build.road(room);
+    if (room.controller.level >= 2) {
+        // check if there is enough extensions otherwise build more
+        if (room.structureCount(STRUCTURE_EXTENSION) < CONTROLLER_STRUCTURES['extension'][room.getLevel()]) {
+            build.extension(room);
+        }
+
+        if (room.memory.roadsPlaced === false) {
+            build.road(room);
+        }
+
+    }
 
 };

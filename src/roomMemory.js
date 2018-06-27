@@ -10,21 +10,22 @@ module.exports = {
 
         const name = room.name;
         const sources = room.findSources();
-        const roomMem = Memory.rooms[name];
+        const memory = Memory.rooms[name];
 
-        if (!roomMem['sources']) roomMem['sources'] = {};
+        if (!memory.sources) {
+            memory.sources = {};
+        }
 
         for (let source of sources) {
             let sourceId = source.id;
-            roomMem['sources'][sourceId] = source.pos.countFreeSpace();
+            memory.sources[sourceId] = source.pos.countFreeSpace();
         }
 
-
-
+        if (!'roadsPlaced' in memory) {
+            memory.roadsPlaced = false;
+        }
         //flag to say that room memory has been initialised
         Memory.rooms[name]['init'] = true
-
-
     }
 
 
