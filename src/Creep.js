@@ -36,7 +36,7 @@ module.exports = () => {
 
     Creep.prototype.moveToTarget = function(target) {
         if (!target) {
-            throw new Error(`creep ${this.creep.name} requires target`);
+            throw new Error(`creep ${this.name} requires target`);
         }
 
         let result = this.moveTo(target);
