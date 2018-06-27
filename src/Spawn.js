@@ -2,7 +2,7 @@
  * Created by Benjamin Jed Harris on 22/06/2018.
  */
 
-const Harvester = require('harvester');
+const Harvester = require('Harvester');
 
 module.exports = () => {
 
