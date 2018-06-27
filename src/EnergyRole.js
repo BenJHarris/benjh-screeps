@@ -43,4 +43,17 @@ module.exports =
         return this.creep.harvest(source);
     }
 
+    transferEnergyToTarget(target) {
+        return this.creep.transfer(target, RESOURCE_ENERGY);
+    }
+
+    findClosestEnergyDropOff() {
+        return this.creep.findClosestByRange(FIND_MY_STRUCTURES, {
+            filter: (s) => {
+                return (s.structureType === STRUCTURE_SPAWN ||
+                    s.structureType === STRUCTURE_EXTENSION) &&
+                    s.energy < s.energyCapacity
+            }})
+    }
+
 };

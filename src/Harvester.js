@@ -18,24 +18,16 @@ module.exports =
         static get UPGRADE_CONTROLLER() {return 4}
 
 
-    // SuPeR MiNiOnZ :3 REEG OF REGENDS >> >>!!>>! <! 
         constructor(creep) {
             super(creep);
         }
 
-        moveToSpawn() {
-            let spawn = Game.getObjectById(this.memory.source);
-            return this.creep.moveToTarget(spawn);
-        }
+        dropOffEnergy() {
+            let target = this.findClosestEnergyDropOff();
 
-        transferEnergyToSpawn() {
-            let spawn = Game.getObjectById(this.memory.source);
-            return this.creep.transfer(spawn, RESOURCE_ENERGY);
-        }
-
-        chooseTarget() {
-            if (this.creep.room.getMode() === constants.ROOM_MODE_NORMAL) {
-
+            if (this.moveToTarget(target) > 0) {
+                this.transferEnergyToTarget(target);
+                this.setStatus(Harvester.TRANSFER_ENERGY);
             }
         }
 
@@ -43,16 +35,18 @@ module.exports =
 
             const state = this.memory.status;
 
-            // if (state === Harvester.MOVE_TO_SOURCE) {
-            //     if (this.moveToSource() > 0) {
-            //         this.harvestSource();
-            //         this.setStatus(Harvester.HARVESTING);
-            //     }
-            // } else if (state === Harvester.HARVESTING) {
-            //     if (this.isFull()) {
-            //         this.chooseTarget();
-            //     }
-            // }
+            if (state === Harvester.MOVE_TO_SOURCE) {
+                if (this.moveToSource() > 0) {
+                    this.harvestSource();
+                    this.setStatus(Harvester.HARVESTING);
+                }
+            } else if (state === Harvester.HARVESTING) {
+                if (this.isFull()) {
+                    if (this.creep.room.getMode() === constants.ROOM_MODE_NORMAL) {
+                        this.dropOffEnergy();
+                    }
+                }
+            }
 
             if (state === 'mov_to_source') {
                 if (this.moveToSource() > 0) {

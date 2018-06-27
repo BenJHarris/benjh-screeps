@@ -18,6 +18,10 @@ module.exports =
             return this.creep.setStatus(status)
         }
 
+        moveToTarget(target) {
+            return this.creep.moveToTarget(target);
+        }
+
         run() {
             throw new Error('run() must be implemented on subclass');
         }

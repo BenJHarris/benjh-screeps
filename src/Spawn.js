@@ -9,6 +9,7 @@ module.exports = () => {
         let config = this.room.getConfig().harvester;
         let body = config.body;
         let memory = {
+            role: 'harvester',
             source: () => this.room.leastAssignedSource().id
         };
 
@@ -28,7 +29,7 @@ module.exports = () => {
         } else {
 
             let memory = {
-                home: this.id,
+                spawn: this.id,
             };
             for (let prop in roleMemory) {
                 memory[prop] = roleMemory[prop];
