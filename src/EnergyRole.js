@@ -42,6 +42,10 @@ module.exports =
         return this.creep.harvest(source);
     }
 
+    buildStructure(target) {
+        this.creep.build(target);
+    }
+
     transferEnergyToTarget(target) {
         return this.creep.transfer(target, RESOURCE_ENERGY);
     }

@@ -65,8 +65,7 @@ module.exports =
 
             let state = this.memory.status;
             let target = Game.getObjectById(this.memory.target);
-            console.log(target);
-            console.log(target instanceof ConstructionSite);
+            let source = Game.getObjectById(this.memory.source);
 
             if (state === Harvester.MOVE_TO_TARGET) {
                 if (this.moveToTarget(target) > 0) {
@@ -99,13 +98,25 @@ module.exports =
                 if (!this.isEmpty()) {
                     this.transferEnergyToTarget(target);
                 } else {
-                    this.setTarget(Game.getObjectById(this.memory.source));
+                    this.setTarget(source);
                     this.setStatus(Harvester.MOVE_TO_TARGET);
                     this.run();
                 }
             } else if (state === Harvester.UPGRADE_CONTROLLER) {
                 if (!this.isEmpty()) {
                     this.upgradeController(target);
+                } else {
+                    this.setTarget(source);
+                    this.setStatus(Harvester.MOVE_TO_TARGET);
+                    this.run();
+                }
+            } else if (state === Harvester.BUILD_STRUCTURE) {
+                if (!this.isEmpty()) {
+                    this.buildStructure(target);
+                } else {
+                    this.setTarget(source);
+                    this.setStatus(Harvester.MOVE_TO_TARGET);
+                    this.run();
                 }
             }
         }
