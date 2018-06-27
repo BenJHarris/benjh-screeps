@@ -61,7 +61,8 @@ module.exports =
 
             let state = this.memory.status;
             let target = Game.getObjectById(this.memory.target);
-            if (!target) {
+            // fix in case a construction site gets built while a creep's target
+            if (target === null) {
                 this.memory.target = this.memory.source;
                 target = Game.getObjectById(this.memory.target);
                 this.setStatus(Harvester.MOVE_TO_TARGET);
