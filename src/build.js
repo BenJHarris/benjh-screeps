@@ -68,8 +68,7 @@ module.exports = {
             let ret = PathFinder.search(
                 origin, obj,
                 {
-                    plainCost: 2,
-                    swampCost: 10,
+                    swampCost: 1,
 
                     roomCallback: function(roomName) {
                         let room = Game.rooms[roomName];
