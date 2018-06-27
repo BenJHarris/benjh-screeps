@@ -9,7 +9,7 @@ module.exports = () => {
         let config = this.room.getConfig().harvester;
         let body = config.body;
         let memory = {
-            source: () => this.room.leastAssignedSource()
+            source: () => this.room.leastAssignedSource().id
         };
 
         this.spawnCustom(body, memory)

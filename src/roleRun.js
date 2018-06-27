@@ -10,6 +10,7 @@ module.exports = () => {
         let creep = Game.creeps[name];
         switch (creep.memory.role) {
             case 'harvester':
+                console.log('a');
                 let harvester = new Harvester(creep);
                 break;
         }
