@@ -36,7 +36,7 @@ module.exports = () => {
             `c${Memory.creepCount}`,
             {dryRun: true}
         ) === OK)) {
-            // throw new Error(`creep c${Memory.creepCount} could not be created`);
+            throw new Error(`creep c${Memory.creepCount} could not be created`);
         } else {
 
             let memory = {
