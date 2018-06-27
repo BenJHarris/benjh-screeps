@@ -24,21 +24,16 @@ rcl1 = {
 };
 
 rcl2 =  {
-    harvester: {
-        body: [WORK, CARRY, MOVE, MOVE]
-    },
+    harvester: rcl1.harvester,
     miner: {
         body: [WORK, WORK, WORK, WORK, WORK, MOVE]
     },
-    buildPriority: [STRUCTURE_EXTENSION]
+    buildPriority: [STRUCTURE_EXTENSION, STRUCTURE_ROAD, STRUCTURE_RAMPART, STRUCTURE_WALL]
 };
 
 rcl3 = {
-    harvester: {
-        body: [WORK, CARRY, MOVE, MOVE],
-    },
-    miner: {
-        body: [WORK, WORK, WORK, WORK, WORK, MOVE]
-    },
-    buildPriority: [STRUCTURE_EXTENSION, STRUCTURE_CONTAINER, STRUCTURE_TOWER, STRUCTURE_RAMPART, STRUCTURE_WALL]
+    harvester: rcl1.harvester,
+    miner: rcl2.miner,
+    buildPriority: [STRUCTURE_EXTENSION, STRUCTURE_ROAD, STRUCTURE_CONTAINER, STRUCTURE_TOWER,
+        STRUCTURE_RAMPART, STRUCTURE_WALL]
 };

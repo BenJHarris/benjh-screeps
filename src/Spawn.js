@@ -20,6 +20,11 @@ module.exports = () => {
 
     };
 
+    StructureSpawn.prototype.spawnMiner = function() {
+
+        let config = this.room.getConfig().miner;
+    };
+
     StructureSpawn.prototype.spawnCustom = function(bodyParts, roleMemory) {
 
         //check to see if creep is spawnable;
