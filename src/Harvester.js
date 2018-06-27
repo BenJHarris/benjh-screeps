@@ -95,7 +95,7 @@ module.exports =
                 if (!this.isEmpty()) {
                     this.transferEnergyToTarget(target);
                 } else {
-                    this.setTarget(this.memory.source);
+                    this.setTarget(Game.getObjectById(this.memory.source));
                     this.setStatus(Harvester.MOVE_TO_TARGET);
                     this.run();
                 }
