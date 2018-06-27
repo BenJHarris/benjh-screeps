@@ -16,7 +16,7 @@ module.exports = () => {
 
     };
 
-    StructureSpawn.spawnCustom = function(bodyParts, roleMemory) {
+    StructureSpawn.prototype.spawnCustom = function(bodyParts, roleMemory) {
 
         //check to see if creep is spawnable;
         if (!(this.spawnCreep(
