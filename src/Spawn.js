@@ -11,8 +11,8 @@ module.exports = () => {
         let config = this.room.getConfig().harvester;
         let body = config.body;
         let memory = {
-            status: 'mov_to_source',
             role: 'harvester',
+            status: Harvester.MOVE_TO_TARGET,
             source: (() => this.room.leastAssignedSource().id)()
         };
 
