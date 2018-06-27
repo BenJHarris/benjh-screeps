@@ -59,7 +59,7 @@ module.exports = {
             }
         });
         targets.push({
-            pos: this.room.controller.pos,
+            pos: room.controller.pos,
             range: 1
         });
 
