@@ -7,6 +7,12 @@ module.exports = () => {
     StructureSpawn.prototype.spawnHarvester = function() {
 
         let config = this.room.getConfig().harvester;
+        let body = config.body;
+        let memory = {
+            source: () => this.room.leastAssignedSource()
+        };
+
+        this.spawnCustom(body, memory)
 
     };
 
