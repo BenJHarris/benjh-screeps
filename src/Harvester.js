@@ -95,7 +95,7 @@ module.exports =
                     this.run();
                 }
             } else if (state === Harvester.TRANSFER_ENERGY) {
-                if (!this.isEmpty()) {
+                if (!this.isEmpty() && target.energy < target.energyCapacity) {
                     this.transferEnergyToTarget(target);
                 } else {
                     this.setTarget(source);
