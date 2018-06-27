@@ -16,9 +16,6 @@ module.exports = () => {
             source: (() => this.room.leastAssignedSource().id)()
         };
 
-        console.log(body);
-        console.log(memory);
-
         this.spawnCustom(body, memory)
 
     };
