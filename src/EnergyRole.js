@@ -37,9 +37,21 @@ module.exports =
     }
 
     moveToTarget(target) {
+        if (!this.isEmpty()) {
+            this.repairClose();
+        }
         return super.moveToTarget(target);
-
     }
+
+    repairClose() {
+        let target = this.creep.pos.findInRange(FIND_MY_STRUCTURES, 3, {
+            filter: (s) => {
+                return s.hits < s.hitsMax;
+            }
+        });
+        this.creep.repair(target);
+    };
+
 
     transferEnergyToTarget(target) {
         return this.creep.transfer(target, RESOURCE_ENERGY);
@@ -50,8 +62,8 @@ module.exports =
             filter: (s) => {
                 return (s.structureType === STRUCTURE_SPAWN ||
                     s.structureType === STRUCTURE_EXTENSION) &&
-                    s.energy < s.energyCapacity
-            }})
+                    s.energy < s.energyCapacity;
+            }});
     }
 
 };
