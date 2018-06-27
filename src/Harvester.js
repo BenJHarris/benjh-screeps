@@ -17,6 +17,8 @@ module.exports =
         static get TRANSFER_ENERGY() {return 3}
         static get UPGRADE_CONTROLLER() {return 4}
 
+
+    // SuPeR MiNiOnZ :3 REEG OF REGENDS >> >>!!>>! <! 
         constructor(creep) {
             super(creep);
         }
