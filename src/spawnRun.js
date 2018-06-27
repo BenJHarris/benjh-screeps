@@ -7,6 +7,8 @@ module.exports = (room) => {
     let requiredHarvesters = 5;
     let harvesterCreeps = room.findCreeps('harvester');
 
+    console.log(harvesterCreeps.length);
+
     if (harvesterCreeps.length > requiredHarvesters) {
         room.findSpawns()[0].spawnHarvester();
     }
