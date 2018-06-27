@@ -92,11 +92,7 @@ module.exports = {
             );
 
             for (pos of ret.path) {
-                room.visual.circle(pos, {
-                    fill: 'transparent',
-                    radius: 0.55,
-                    stroke: 'red'
-                });
+                room.createConstructionSite(pos, STRUCTURE_ROAD);
             }
 
         }
