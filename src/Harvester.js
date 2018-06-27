@@ -62,7 +62,7 @@ module.exports =
         }
 
         run() {
-            
+
             let state = this.memory.status;
             let target = Game.getObjectById(this.memory.target);
             let source = Game.getObjectById(this.memory.source);

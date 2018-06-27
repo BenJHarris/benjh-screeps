@@ -50,5 +50,19 @@ module.exports = () => {
         } else {
             return constants.ROOM_MODE_NORMAL;
         }
+    };
+
+    Room.prototype.findCreeps = function(type=undefined) {
+
+        if (type === undefined) {
+            return this.find(FIND_MY_CREEPS);
+        } else {
+            return this.find(FIND_MY_CREEPS, {
+                filter: (c) => {
+                    return c.memory.role;
+                }
+            })
+        }
+
     }
 };

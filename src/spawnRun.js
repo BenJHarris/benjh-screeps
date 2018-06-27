@@ -3,9 +3,13 @@
  */
 
 module.exports = (room) => {
-    for (let name in Game.spawns) {
-        let spawn = Game.spawns[name];
 
-        spawn.spawnHarvester();
+    let requiredHarvesters = 5;
+    let harvesterCreeps = room.findCreeps('harvester');
+
+    if (harvesterCreeps.length > requiredHarvesters) {
+        room.findSpawns()[0].spawnHarvester();
     }
+
+
 };
