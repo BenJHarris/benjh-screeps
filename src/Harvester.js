@@ -16,6 +16,7 @@ module.exports =
         static get MOVE_TO_TARGET() {return 2}
         static get TRANSFER_ENERGY() {return 3}
         static get UPGRADE_CONTROLLER() {return 4}
+        static get BUILD_STRUCTURE() {return 4}
 
 
         constructor(creep) {
@@ -74,11 +75,13 @@ module.exports =
                     } else if (target instanceof Structure &&
                         (target.structureType === STRUCTURE_SPAWN ||
                             target.structureType === STRUCTURE_EXTENSION)) {
-                        console.log('here');
                         this.setStatus(Harvester.TRANSFER_ENERGY);
                         this.run();
                     } else if (target instanceof StructureController) {
                         this.setStatus(Harvester.UPGRADE_CONTROLLER);
+                        this.run();
+                    } else if (target instanceof ConstructionSite) {
+                        this.setStatus(Harvester.BUILD_STRUCTURE);
                         this.run();
                     }
                 }
