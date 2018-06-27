@@ -69,6 +69,8 @@ module.exports =
             let target = Game.getObjectById(this.memory.target);
             let source = Game.getObjectById(this.memory.source);
 
+            console.log(state);
+
             if (state === Harvester.MOVE_TO_TARGET) {
                 if (this.moveToTarget(target) > 0) {
 
