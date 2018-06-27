@@ -19,13 +19,13 @@ module.exports = {
 
 rcl1 = {
     harvester: {
-        body: [WORK, CARRY, CARRY, MOVE, MOVE]
+        body: [WORK, CARRY, MOVE, MOVE]
     }
 };
 
 rcl2 =  {
     harvester: {
-        body: [WORK, CARRY, CARRY, MOVE, MOVE]
+        body: [WORK, CARRY, MOVE, MOVE]
     },
     miner: {
         body: [WORK, WORK, WORK, WORK, WORK, MOVE]
@@ -35,7 +35,7 @@ rcl2 =  {
 
 rcl3 = {
     harvester: {
-        body: [WORK, CARRY, CARRY, MOVE, MOVE],
+        body: [WORK, CARRY, MOVE, MOVE],
     },
     miner: {
         body: [WORK, WORK, WORK, WORK, WORK, MOVE]

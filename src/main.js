@@ -10,8 +10,6 @@ module.exports.loop = () => {
     manageMemory();
     roleRun();
 
-    delete Memory.creeps;
-
     for (let name in Game.rooms) {
 
         let room = Game.rooms[name];

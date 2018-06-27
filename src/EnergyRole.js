@@ -28,9 +28,8 @@ module.exports =
         return this.creep.moveToController(controller);
     }
 
-    upgradeController() {
-        let controller = this.creep.room.controller;
-        return this.creep.upgradeController(controller);
+    upgradeController(target) {
+        return this.creep.upgradeController(target);
     }
 
     moveToSource() {
@@ -43,12 +42,16 @@ module.exports =
         return this.creep.harvest(source);
     }
 
+    buildStructure(target) {
+        this.creep.build(target);
+    }
+
     transferEnergyToTarget(target) {
         return this.creep.transfer(target, RESOURCE_ENERGY);
     }
 
     findClosestEnergyDropOff() {
-        return this.creep.findClosestByRange(FIND_MY_STRUCTURES, {
+        return this.creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {
             filter: (s) => {
                 return (s.structureType === STRUCTURE_SPAWN ||
                     s.structureType === STRUCTURE_EXTENSION) &&

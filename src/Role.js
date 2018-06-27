@@ -11,11 +11,18 @@ module.exports =
         constructor(creep) {
             this.creep = creep;
             this.memory = creep.memory;
-            this.run();
         }
 
         setStatus(status) {
             return this.creep.setStatus(status)
+        }
+
+        setTarget(target) {
+            return this.creep.setTarget(target);
+        }
+
+        getTarget() {
+            return this.creep.getTarget();
         }
 
         moveToTarget(target) {
