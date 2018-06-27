@@ -66,7 +66,6 @@ module.exports =
             let target = Game.getObjectById(this.memory.target);
 
             if (state === Harvester.MOVE_TO_TARGET) {
-                console.log(this.moveToTarget(target));
                 if (this.moveToTarget(target) > 0) {
 
                     if (target instanceof Source) {
@@ -75,6 +74,7 @@ module.exports =
                     } else if (target instanceof Structure &&
                         (target.structureType === STRUCTURE_SPAWN ||
                             target.structureType === STRUCTURE_EXTENSION)) {
+                        console.log('here');
                         this.setStatus(Harvester.TRANSFER_ENERGY);
                         this.run();
                     } else if (target instanceof StructureController) {
