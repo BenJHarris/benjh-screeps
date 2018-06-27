@@ -23,18 +23,8 @@ module.exports =
         return this.creep.carry[RESOURCE_ENERGY] === 0;
     }
 
-    moveToController() {
-        let controller = this.creep.room.controller;
-        return this.creep.moveToController(controller);
-    }
-
     upgradeController(target) {
         return this.creep.upgradeController(target);
-    }
-
-    moveToSource() {
-        let source = Game.getObjectById(this.memory.source);
-        return this.creep.moveToTarget(source);
     }
 
     harvestSource() {
@@ -44,6 +34,11 @@ module.exports =
 
     buildStructure(target) {
         this.creep.build(target);
+    }
+
+    moveToTarget(target) {
+        super.moveToTarget(target);
+        
     }
 
     transferEnergyToTarget(target) {

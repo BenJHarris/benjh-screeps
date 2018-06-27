@@ -6,39 +6,40 @@ module.exports = {
 
     extension: (room) => {
 
+        let numToBuild = room.structureCount(STRUCTURE_EXTENSION) - CONTROLLER_STRUCTURES['extension'][room.getLevel()];
+
         let firstSpawn = room.findSpawns()[0];
         let startX = firstSpawn.pos.x - 1;
         let startY = firstSpawn.pos.y - 1;
 
-        let positionFound = false;
         let length = 2;
         let x = 0;
         let y = 0;
-        while(!positionFound) {
+        while(numToBuild > 0) {
 
             for (; x < length; x += 2) {
                 if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) === OK) {
-                    positionFound = true;
+                    numToBuild--;
                 }
             }
-            if (!positionFound) {
+            if (numToBuild > 0) {
                 for (; y < length; y += 2) {
                     if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) === OK) {
-                        positionFound = true;
+                        numToBuild--;
                     }
                 }
             }
-            if (!positionFound) {
+            if (numToBuild > 0) {
                 for (; x > 0; x -= 2) {
                     if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) === OK) {
-                        positionFound = true;
+                        numToBuild--;
                     }
                 }
             }
-            if (!positionFound) {
+            if (numToBuild > 0) {
                 for (; y > 0; y -= 2) {
                     if (room.createConstructionSite(startX + x, startY + y, STRUCTURE_EXTENSION) === OK) {
-                        positionFound = true;
+                        numToBuild--;
                     }
                 }
             }
