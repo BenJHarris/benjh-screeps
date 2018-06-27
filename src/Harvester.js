@@ -24,7 +24,7 @@ module.exports =
                 this.memory = {}
             }
             if (!this.memory.status) {
-                this.memory.status = 'mov_to_source';
+                this.memory.status = Harvester.MOVE_TO_TARGET;
             }
             if (!this.memory.source) {
                 this.memory.source = this.creep.room.leastAssignedSource().id
@@ -35,33 +35,72 @@ module.exports =
             this.run();
         }
 
+        chooseTarget() {
+
+            let roomMode = this.creep.room.getMode();
+            let target;
+
+            if (roomMode === constants.ROOM_MODE_NORMAL) {
+
+                target = this.findClosestEnergyDropOff();
+
+                if (!target) {
+                    let buildList = this.creep.room.getBuildList();
+                    if (buildList.length > 0) {
+                        target = buildList[0];
+                    } else {
+                        target = this.creep.room.controller
+                    }
+                }
+            } else if (roomMode === constants.ROOM_MODE_CONTROLLER) {
+                target = this.creep.room.controller;
+            } else if (roomMode === constants.ROOM_MODE_FLEE) {
+
+            }
+            let targetId = target.id;
+            this.setTarget(targetId);
+        }
+
         run() {
 
             let state = this.memory.status;
+            let target = Game.getObjectById(this.memory.target);
 
-            if (state === 'mov_to_source') {
-                if (this.moveToSource() > 0) {
+            if (state === Harvester.MOVE_TO_TARGET) {
+                if (this.moveToTarget(target) > 0) {
+
+                    if (target instanceof Source) {
+                        this.setStatus(Harvester.HARVESTING);
+                        this.run();
+                    } else if (target instanceof Structure &&
+                        (target.structureType === STRUCTURE_SPAWN ||
+                            target.structureType === STRUCTURE_EXTENSION)) {
+                        this.setStatus(Harvester.TRANSFER_ENERGY);
+                        this.run();
+                    } else if (target instanceof StructureController) {
+                        this.setStatus(Harvester.UPGRADE_CONTROLLER);
+                        this.run();
+                    }
+                }
+            } else if (state === Harvester.HARVESTING) {
+                if(!this.isFull()) {
                     this.harvestSource();
-                    this.setStatus('harvesting')
-                }
-            } else if (state === 'harvesting') {
-                if (this.isFull()) {
-                    this.moveToController();
-                    this.setStatus('mov_to_cont');
                 } else {
-                    this.harvestSource();
+                    this.chooseTarget();
+                    this.setStatus(Harvester.MOVE_TO_TARGET);
+                    this.run();
                 }
-            } else if (state === 'mov_to_cont') {
-                if (this.moveToController() > 0) {
-                    this.upgradeController();
-                    this.setStatus('upg_cont')
-                }
-            } else if (state === 'upg_cont') {
-                if (this.isEmpty()) {
-                    this.moveToSource();
-                    this.setStatus('mov_to_source');
+            } else if (state === Harvester.TRANSFER_ENERGY) {
+                if (!this.isEmpty()) {
+                    this.transferEnergyToTarget(target);
                 } else {
-                    this.upgradeController();
+                    this.setTarget(this.memory.source);
+                    this.setStatus(Harvester.MOVE_TO_TARGET);
+                    this.run();
+                }
+            } else if (state === Harvester.UPGRADE_CONTROLLER) {
+                if (!this.isEmpty()) {
+                    this.upgradeController(target);
                 }
             }
         }

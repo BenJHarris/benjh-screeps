@@ -17,6 +17,14 @@ module.exports =
             return this.creep.setStatus(status)
         }
 
+        setTarget(target) {
+            return this.creep.setTarget(target);
+        }
+
+        getTarget() {
+            return this.creep.getTarget();
+        }
+
         moveToTarget(target) {
             return this.creep.moveToTarget(target);
         }

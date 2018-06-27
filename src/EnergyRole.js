@@ -28,9 +28,8 @@ module.exports =
         return this.creep.moveToController(controller);
     }
 
-    upgradeController() {
-        let controller = this.creep.room.controller;
-        return this.creep.upgradeController(controller);
+    upgradeController(target) {
+        return this.creep.upgradeController(target);
     }
 
     moveToSource() {

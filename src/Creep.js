@@ -26,24 +26,34 @@ module.exports = () => {
         this.memory.status = status;
     };
 
-    Creep.prototype.moveToTarget = function(target) {
-        let result =  this.moveTo(target);
-        if (this.pos.inRangeTo(target.pos, 1)) {
-            return 1
-        } else {
-            return result;
-        }
+    Creep.prototype.setTarget = function(target) {
+        this.memory.target = target.id;
     };
 
-    Creep.prototype.moveToController = function(target) {
-        let result =  this.moveTo(target);
-        if (this.pos.inRangeTo(target.pos, 3)) {
-            return 1
-        } else {
-            return result;
+    Creep.prototype.getTarget = function() {
+        return Game.getObjectById(this.memory.target);
+    };
+
+    Creep.prototype.moveToTarget = function(target) {
+        if (!target) {
+            throw new Error(`creep ${this.creep.name} requires target`);
         }
-    }
 
+        let result = this.moveTo(target);
 
-
+        if ((target.structureType && target.structureType === STRUCTURE_CONTROLLER) ||
+            target instanceof ConstructionSite) {
+            if (this.pos.inRangeTo(target.pos, 3)) {
+                return 1;
+            } else {
+                return result;
+            }
+        } else {
+            if (this.pos.inRangeTo(target.pos, 1)) {
+                return 1
+            } else {
+                return result;
+            }
+        }
+    };
 };
