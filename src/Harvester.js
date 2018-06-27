@@ -41,41 +41,41 @@ module.exports =
 
             const state = this.memory.status;
 
-            if (state === Harvester.MOVE_TO_SOURCE) {
-                if (this.moveToSource() > 0) {
-                    this.harvestSource();
-                    this.setStatus(Harvester.HARVESTING);
-                }
-            } else if (state === Harvester.HARVESTING) {
-                if (this.isFull()) {
-                    this.chooseTarget();
-                }
-            }
-
-            // if (state === 'mov_to_source') {
+            // if (state === Harvester.MOVE_TO_SOURCE) {
             //     if (this.moveToSource() > 0) {
             //         this.harvestSource();
-            //         this.setStatus('harvesting')
+            //         this.setStatus(Harvester.HARVESTING);
             //     }
-            // } else if (state === 'harvesting') {
+            // } else if (state === Harvester.HARVESTING) {
             //     if (this.isFull()) {
-            //         this.moveToController();
-            //         this.setStatus('mov_to_cont');
-            //     } else {
-            //         this.harvestSource();
-            //     }
-            // } else if (state === 'mov_to_cont') {
-            //     if (this.moveToController() > 0) {
-            //         this.upgradeController();
-            //         this.setStatus('upg_cont')
-            //     }
-            // } else if (state === 'upg_cont') {
-            //     if (this.isEmpty()) {
-            //         this.moveToSource();
-            //         this.setStatus('mov_to_source');
-            //     } else {
-            //         this.upgradeController();
+            //         this.chooseTarget();
             //     }
             // }
+
+            if (state === 'mov_to_source') {
+                if (this.moveToSource() > 0) {
+                    this.harvestSource();
+                    this.setStatus('harvesting')
+                }
+            } else if (state === 'harvesting') {
+                if (this.isFull()) {
+                    this.moveToController();
+                    this.setStatus('mov_to_cont');
+                } else {
+                    this.harvestSource();
+                }
+            } else if (state === 'mov_to_cont') {
+                if (this.moveToController() > 0) {
+                    this.upgradeController();
+                    this.setStatus('upg_cont')
+                }
+            } else if (state === 'upg_cont') {
+                if (this.isEmpty()) {
+                    this.moveToSource();
+                    this.setStatus('mov_to_source');
+                } else {
+                    this.upgradeController();
+                }
+            }
         }
     };
