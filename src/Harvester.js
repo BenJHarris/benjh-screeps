@@ -29,6 +29,9 @@ module.exports =
             if (!this.memory.source) {
                 this.memory.source = this.creep.room.leastAssignedSource().id
             }
+            if (!this.memory.target) {
+                this.memory.target = this.memory.source;
+            }
             this.run();
         }
 
