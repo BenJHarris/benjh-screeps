@@ -11,6 +11,6 @@ module.exports = (room) => {
         build.extension(room);
     }
 
-
+    build.road(room);
 
 };

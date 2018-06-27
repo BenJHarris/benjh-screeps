@@ -11,14 +11,10 @@ module.exports.loop = () => {
     roleRun();
 
     for (let name in Game.rooms) {
-
         let room = Game.rooms[name];
+
         spawnRun(room);
         buildRun(room);
-
-        if (!room.controller.safeMode) {
-            room.controller.activateSafeMode();
-        }
 
     }
 
