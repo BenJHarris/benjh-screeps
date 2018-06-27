@@ -14,7 +14,7 @@ module.exports = () => {
 
         for (let x = -1; x <= 1;  x++) {
             for (let y = -1; y <= 1; y++) {
-                if (!(x == 0 && y == 0)) {
+                if (!(x === 0 && y === 0)) {
                     let rp = new RoomPosition(this.x + x, this.y + y, this.roomName);
                     let tileContents = rp.look();
                     for (let obj of tileContents) {
@@ -36,5 +36,16 @@ module.exports = () => {
             }
         }
         return freeSpaceCount;
+    };
+
+    RoomPosition.prototype.findClosestFromArr = function(posArray) {
+
+        for (pos of posArray) {
+            if (!pos instanceof RoomPosition) {
+                throw new Error('Array must only be roomPosition objects');
+            }
+        }
+
+
     }
 };

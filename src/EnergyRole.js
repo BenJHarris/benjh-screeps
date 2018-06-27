@@ -23,18 +23,8 @@ module.exports =
         return this.creep.carry[RESOURCE_ENERGY] === 0;
     }
 
-    moveToController() {
-        let controller = this.creep.room.controller;
-        return this.creep.moveToController(controller);
-    }
-
     upgradeController(target) {
         return this.creep.upgradeController(target);
-    }
-
-    moveToSource() {
-        let source = Game.getObjectById(this.memory.source);
-        return this.creep.moveToTarget(source);
     }
 
     harvestSource() {
@@ -46,6 +36,23 @@ module.exports =
         this.creep.build(target);
     }
 
+    moveToTarget(target) {
+        if (!this.isEmpty()) {
+            this.repairClose();
+        }
+        return super.moveToTarget(target);
+    }
+
+    repairClose() {
+        let target = this.creep.pos.findInRange(FIND_MY_STRUCTURES, 3, {
+            filter: (s) => {
+                return s.hits < s.hitsMax;
+            }
+        });
+        this.creep.repair(target);
+    };
+
+
     transferEnergyToTarget(target) {
         return this.creep.transfer(target, RESOURCE_ENERGY);
     }
@@ -55,8 +62,8 @@ module.exports =
             filter: (s) => {
                 return (s.structureType === STRUCTURE_SPAWN ||
                     s.structureType === STRUCTURE_EXTENSION) &&
-                    s.energy < s.energyCapacity
-            }})
+                    s.energy < s.energyCapacity;
+            }});
     }
 
 };

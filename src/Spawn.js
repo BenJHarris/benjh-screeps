@@ -12,12 +12,21 @@ module.exports = () => {
         let body = config.body;
         let memory = {
             role: 'harvester',
-            status: Harvester.MOVE_TO_TARGET,
-            source: (() => this.room.leastAssignedSource().id)()
         };
 
         this.spawnCustom(body, memory)
 
+    };
+
+    StructureSpawn.prototype.spawnMiner = function() {
+
+        let config = this.room.getConfig().miner;
+        let body = config.body;
+        let memory = {
+            role: 'miner',
+        };
+
+        this.spawnCustom(body, memory);
     };
 
     StructureSpawn.prototype.spawnCustom = function(bodyParts, roleMemory) {
@@ -28,7 +37,7 @@ module.exports = () => {
             `c${Memory.creepCount}`,
             {dryRun: true}
         ) === OK)) {
-            // throw new Error(`creep c${Memory.creepCount} could not be created`);
+            //throw new Error(`creep c${Memory.creepCount} could not be created`);
         } else {
 
             let memory = {

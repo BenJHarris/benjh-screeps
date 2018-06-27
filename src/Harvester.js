@@ -11,19 +11,15 @@ module.exports =
      */
     class Harvester extends EnergyRole {
 
-        static get MOVE_TO_SOURCE() {return 0}
+        static get MOVE_TO_TARGET() {return 0}
         static get HARVESTING() {return 1}
-        static get MOVE_TO_TARGET() {return 2}
-        static get TRANSFER_ENERGY() {return 3}
-        static get UPGRADE_CONTROLLER() {return 4}
+        static get TRANSFER_ENERGY() {return 2}
+        static get UPGRADE_CONTROLLER() {return 3}
         static get BUILD_STRUCTURE() {return 4}
 
 
         constructor(creep) {
             super(creep);
-            if (!this.memory) {
-                this.memory = {}
-            }
             if (!this.memory.status) {
                 this.memory.status = Harvester.MOVE_TO_TARGET;
             }
@@ -62,12 +58,19 @@ module.exports =
         }
 
         run() {
-            
+
             let state = this.memory.status;
             let target = Game.getObjectById(this.memory.target);
+            // fix in case a construction site gets built while a creep's target
+            if (target === null) {
+                this.memory.target = this.memory.source;
+                target = Game.getObjectById(this.memory.target);
+                this.setStatus(Harvester.MOVE_TO_TARGET);
+            }
             let source = Game.getObjectById(this.memory.source);
 
-            if (state === Harvester.MOVE_TO_TARGET) {
+            if (state === Harvester.MOVE_TO_TARGET
+            ) {
                 if (this.moveToTarget(target) > 0) {
 
                     if (target instanceof Source) {
@@ -95,7 +98,7 @@ module.exports =
                     this.run();
                 }
             } else if (state === Harvester.TRANSFER_ENERGY) {
-                if (!this.isEmpty()) {
+                if (!this.isEmpty() && target.energy < target.energyCapacity) {
                     this.transferEnergyToTarget(target);
                 } else {
                     this.setTarget(source);
@@ -111,7 +114,7 @@ module.exports =
                     this.run();
                 }
             } else if (state === Harvester.BUILD_STRUCTURE) {
-                if (!this.isEmpty()) {
+                if (!this.isEmpty() && target instanceof ConstructionSite) {
                     this.buildStructure(target);
                 } else {
                     this.setTarget(source);
