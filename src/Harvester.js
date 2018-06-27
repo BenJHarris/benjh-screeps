@@ -16,7 +16,7 @@ module.exports =
         static get MOVE_TO_TARGET() {return 2}
         static get TRANSFER_ENERGY() {return 3}
         static get UPGRADE_CONTROLLER() {return 4}
-        static get BUILD_STRUCTURE() {return 4}
+        static get BUILD_STRUCTURE() {return 5}
 
 
         constructor(creep) {
