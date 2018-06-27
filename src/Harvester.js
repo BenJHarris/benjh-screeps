@@ -30,6 +30,7 @@ module.exports =
                 this.memory.source = this.creep.room.leastAssignedSource().id
             }
             if (!this.memory.target) {
+                console.log('hello');
                 this.memory.target = this.memory.source;
             }
             this.run();
