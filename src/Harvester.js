@@ -67,7 +67,8 @@ module.exports =
             let target = Game.getObjectById(this.memory.target);
             let source = Game.getObjectById(this.memory.source);
 
-            if (state === Harvester.MOVE_TO_TARGET) {
+            if (state === Harvester.MOVE_TO_TARGET
+            ) {
                 if (this.moveToTarget(target) > 0) {
 
                     if (target instanceof Source) {
@@ -111,7 +112,7 @@ module.exports =
                     this.run();
                 }
             } else if (state === Harvester.BUILD_STRUCTURE) {
-                if (!this.isEmpty()) {
+                if (!this.isEmpty() && target instanceof ConstructionSite) {
                     this.buildStructure(target);
                 } else {
                     this.setTarget(source);
