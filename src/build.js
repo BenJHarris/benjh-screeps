@@ -110,10 +110,12 @@ module.exports = {
         let spawn = room.findSpawns()[0];
         console.log(potentialSpots);
         let containerLocation = spawn.pos.findClosestByPath(potentialSpots);
+        console.log(containerLocation);
 
-        if (room.createConstructionSite(containerLocation, 3) === OK) {
-            room.memory[source.id].containerLocation = true;
-        }
+        // if (room.createConstructionSite(containerLocation, 3) === OK) {
+        //     room.memory[source.id].containerLocation = true;
+        // }
+        room.visual.circle(containerLocation);
     }
 
 
