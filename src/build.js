@@ -107,8 +107,8 @@ module.exports = {
     sourceContainer: (room, source) => {
 
         let potentialSpots = source.pos.findFreeSpace();
-
         let spawn = room.findSpawns()[0];
+        console.log(potentialSpots);
         let containerLocation = spawn.pos.findClosestByPath(potentialSpots);
 
         if (room.createConstructionSite(containerLocation, 3) === OK) {
