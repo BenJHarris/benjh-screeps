@@ -28,7 +28,7 @@ module.exports = {
                     sourceMem.freeSpaceCount = source.pos.findFreeSpace().length;
                 }
 
-                if(!('containerPlaced') in sourceMem) {
+                if(!('containerPlaced' in sourceMem)) {
                     sourceMem.containerPlaced = false;
                 }
 
