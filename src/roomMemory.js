@@ -25,7 +25,11 @@ module.exports = {
                 let sourceMem = memory.sources[sourceId];
 
                 if (!sourceMem.freeSpaceCount) {
-                    sourceMem.freeSpaceCount = source.pos.countFreeSpace();
+                    sourceMem.freeSpaceCount = source.pos.findFreeSpace().length;
+                }
+
+                if(!sourceMem.hasOwnProperty('containerPlaced')) {
+                    sourceMem.containerPlaced = false;
                 }
 
                 if (!sourceMem.containerLocation) {
@@ -42,7 +46,6 @@ module.exports = {
                 if (!scMem.y) {
                     scMem.y = sourceContainer ? sourceContainer.pos.y : null;
                 }
-
             }
         }
 

@@ -4,7 +4,7 @@
 
 module.exports = {
 
-    extension: (room) => {
+    extensions: (room) => {
 
         let totalBuildableNumber = CONTROLLER_STRUCTURES['extension'][room.getLevel()]
         let numberOfExtensions = room.structureCount(STRUCTURE_EXTENSION);
@@ -52,7 +52,7 @@ module.exports = {
         }
     },
 
-    road: (room) => {
+    roads: (room) => {
 
         let origin = room.findSpawns()[0].pos;
 
