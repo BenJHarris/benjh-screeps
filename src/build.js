@@ -8,7 +8,7 @@ module.exports = {
 
         let totalBuildableNumber = CONTROLLER_STRUCTURES['extension'][room.getLevel()]
         let numberOfExtensions = room.structureCount(STRUCTURE_EXTENSION);
-        
+
         let numToBuild = totalBuildableNumber - numberOfExtensions;
 
         let firstSpawn = room.findSpawns()[0];
