@@ -6,8 +6,10 @@ module.exports = {
 
     extension: (room) => {
 
-        let numToBuild = room.structureCount(STRUCTURE_EXTENSION) - CONTROLLER_STRUCTURES['extension'][room.getLevel()];
-        console.log(numToBuild);
+        let totalBuildableNumber = CONTROLLER_STRUCTURES['extension'][room.getLevel()]
+        let numberOfExtensions = room.structureCount(STRUCTURE_EXTENSION);
+        
+        let numToBuild = totalBuildableNumber - numberOfExtensions;
 
         let firstSpawn = room.findSpawns()[0];
         let startX = firstSpawn.pos.x - 1;
