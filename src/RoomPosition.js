@@ -6,14 +6,13 @@ module.exports = () => {
 
     /**
      * Counts the free spaces around a room position, not including the position itself
-     * @returns {number}
+     * @returns {array}
      */
-    RoomPosition.prototype.countFreeSpace = function() {
+    RoomPosition.prototype.findFreeSpace = function(range=1) {
+        let spaceArr = [];
 
-        let freeSpaceCount = 8;
-
-        for (let x = -1; x <= 1;  x++) {
-            for (let y = -1; y <= 1; y++) {
+        for (let x = -range; x <= range;  x++) {
+            for (let y = -range; y <= range; y++) {
                 if (!(x === 0 && y === 0)) {
                     let rp = new RoomPosition(this.x + x, this.y + y, this.roomName);
                     let tileContents = rp.look();
@@ -24,8 +23,8 @@ module.exports = () => {
                                 break;
                             case('terrain'):
                                 let terrainType = obj['terrain'];
-                                if (terrainType === 'wall') {
-                                    freeSpaceCount--;
+                                if (terrainType !== 'wall') {
+                                    spaceArr.push(rp);
                                 }
                                 break;
                             case('structure'):
@@ -35,17 +34,19 @@ module.exports = () => {
                 }
             }
         }
-        return freeSpaceCount;
+        return spaceArr;
     };
 
-    RoomPosition.prototype.findClosestFromArr = function(posArray) {
-
-        for (pos of posArray) {
-            if (!pos instanceof RoomPosition) {
-                throw new Error('Array must only be roomPosition objects');
+    /**
+     *
+     * @param range
+     * @returns {StructureContainer[]} containers
+     */
+    RoomPosition.prototype.containersInRange = function(range=1) {
+        return this.findInRange(FIND_STRUCTURES, range, {
+            filter: (s) => {
+                return s.structureType === STRUCTURE_CONTAINER;
             }
-        }
-
-
-    }
+        })
+    };
 };

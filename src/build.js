@@ -4,9 +4,12 @@
 
 module.exports = {
 
-    extension: (room) => {
+    extensions: (room) => {
 
-        let numToBuild = room.structureCount(STRUCTURE_EXTENSION) - CONTROLLER_STRUCTURES['extension'][room.getLevel()];
+        let totalBuildableNumber = CONTROLLER_STRUCTURES['extension'][room.getLevel()]
+        let numberOfExtensions = room.structureCount(STRUCTURE_EXTENSION);
+
+        let numToBuild = totalBuildableNumber - numberOfExtensions;
 
         let firstSpawn = room.findSpawns()[0];
         let startX = firstSpawn.pos.x - 1;
@@ -49,7 +52,7 @@ module.exports = {
         }
     },
 
-    road: (room) => {
+    roads: (room) => {
 
         let origin = room.findSpawns()[0].pos;
 
@@ -96,8 +99,23 @@ module.exports = {
                 room.createConstructionSite(pos, STRUCTURE_ROAD);
             }
 
-        }
+            room.memory.roadsPlaced = true;
 
+        }
+    },
+
+    sourceContainer: (room, source) => {
+
+        let potentialSpots = source.pos.findFreeSpace();
+
+        let spawn = room.findSpawns()[0];
+        let containerLocation = spawn.pos.findClosestByPath(potentialSpots);
+
+        if (room.createConstructionSite(containerLocation, 3) === OK) {
+            room.memory[source.id].containerLocation = true;
+        }
     }
+
+
 };
 

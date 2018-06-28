@@ -44,12 +44,12 @@ module.exports =
     }
 
     repairClose() {
-        let target = this.creep.pos.findInRange(FIND_MY_STRUCTURES, 3, {
+        let targets = this.creep.pos.findInRange(FIND_STRUCTURES, 3, {
             filter: (s) => {
-                return s.hits < s.hitsMax;
+                return s.structureType === STRUCTURE_ROAD && s.hits < s.hitsMax;
             }
         });
-        this.creep.repair(target);
+        this.creep.repair(targets[0]);
     };
 
 

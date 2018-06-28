@@ -2,8 +2,6 @@
  * Created by Benjamin Jed Harris on 23/06/2018.
  */
 
-const utility = require('utility');
-
 module.exports = {
 
     init: (room) => {
@@ -18,14 +16,42 @@ module.exports = {
 
         for (let source of sources) {
             let sourceId = source.id;
-            memory.sources[sourceId] = source.pos.countFreeSpace();
+
+            if (!memory.sources[sourceId]) {
+                memory.sources[sourceId] = {};
+
+                let sourceMem = memory.sources[sourceId];
+
+                if (!sourceMem.freeSpaceCount) {
+                    sourceMem.freeSpaceCount = source.pos.findFreeSpace().length;
+                }
+
+                if(!('containerPlaced' in sourceMem)) {
+                    sourceMem.containerPlaced = false;
+                }
+
+                if (!sourceMem.containerLocation) {
+                    sourceMem.containerLocation = {};
+                }
+
+                let scMem = sourceMem.containerLocation;
+                let sourceContainer = source.pos.containersInRange()[0];
+
+                if (!scMem.x) {
+                    scMem.x = sourceContainer ? sourceContainer.pos.x : null;
+                }
+
+                if (!scMem.y) {
+                    scMem.y = sourceContainer ? sourceContainer.pos.y : null;
+                }
+            }
         }
 
         if (!('roadsPlaced' in memory)) {
             memory.roadsPlaced = false;
         }
         //flag to say that room memory has been initialised
-        Memory.rooms[name]['init'] = true
+        Memory.rooms[name].init = true
     }
 
 

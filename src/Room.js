@@ -45,7 +45,7 @@ module.exports = () => {
     };
 
     Room.prototype.getMode = function() {
-        if (this.controller.ticksToDowngrade < 1000) {
+        if (this.controller.ticksToDowngrade < 3000) {
             return constants.ROOM_MODE_CONTROLLER
         } else {
             return constants.ROOM_MODE_NORMAL;

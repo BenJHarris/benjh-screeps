@@ -12,8 +12,6 @@ module.exports =
 
         static get MOVE_TO_TARGET() {return 0}
         static get HARVESTING() {return 1}
-        static get TRANSFER_ENERGY() {return 2}
-        static get BUILD_STRUCTURE() {return 3}
 
     constructor(creep) {
         super(creep);
@@ -39,6 +37,10 @@ module.exports =
     }
 
     run() {
+            let state = this.memory.status;
+            let source = Game.getObjectById(this.memory.source);
+            let target = Game.getObjectById(this.memory.target);
+
 
     }
 
