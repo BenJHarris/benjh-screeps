@@ -28,7 +28,7 @@ module.exports = {
                     sourceMem.freeSpaceCount = source.pos.findFreeSpace().length;
                 }
 
-                if(!sourceMem.hasOwnProperty('containerPlaced')) {
+                if(!('roadsPlaced') in sourceMem) {
                     sourceMem.containerPlaced = false;
                 }
 
@@ -53,7 +53,7 @@ module.exports = {
             memory.roadsPlaced = false;
         }
         //flag to say that room memory has been initialised
-        Memory.rooms[name]['init'] = true
+        Memory.rooms[name].init = true
     }
 
 
