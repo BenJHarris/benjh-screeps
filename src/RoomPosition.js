@@ -37,11 +37,15 @@ module.exports = () => {
         return freeSpaceCount;
     };
 
-    RoomPosition.prototype.containsInRange = function(range=1) {
+    RoomPosition.prototype.containersInRange = function(range=1) {
         return this.findInRange(FIND_STRUCTURES, range, {
             filter: (s) => {
                 return s.structureType === STRUCTURE_CONTAINER;
             }
         })
+    };
+
+    RoomPosition.prototype.findClosestContainerLocation = function() {
+        
     }
 };

@@ -18,7 +18,32 @@ module.exports = {
 
         for (let source of sources) {
             let sourceId = source.id;
-            memory.sources[sourceId] = source.pos.countFreeSpace();
+
+            if (!memory.sources[sourceId]) {
+                memory.sources[sourceId] = {};
+
+                let sourceMem = memory.sources[sourceId];
+
+                if (!sourceMem.freeSpaceCount) {
+                    sourceMem.freeSpaceCount = source.countFreeSpace();
+                }
+
+                if (!sourceMem.containerLocation) {
+                    sourceMem.containerLocation = {};
+                }
+
+                let scMem = sourceMem.containerLocation;
+                let sourceContainer = source.pos.containersInRange()[0];
+
+                if (!scMem.x) {
+                    scMem.x = sourceContainer ? sourceContainer.pos.x : null;
+                }
+
+                if (!scMem.y) {
+                    scMem.y = sourceContainer ? sourceContainer.pos.y : null;
+                }
+
+            }
         }
 
         if (!('roadsPlaced' in memory)) {

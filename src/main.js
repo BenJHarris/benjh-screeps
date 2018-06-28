@@ -16,6 +16,10 @@ module.exports.loop = () => {
         spawnRun(room);
         buildRun(room);
 
+        if (room.controller.my || room.find(FIND_HOSTILE_CREEPS).length > 0) {
+            room.controller.activateSafeMode();
+        }
+
     }
 
 };
