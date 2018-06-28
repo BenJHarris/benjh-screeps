@@ -25,7 +25,7 @@ module.exports = {
                 let sourceMem = memory.sources[sourceId];
 
                 if (!sourceMem.freeSpaceCount) {
-                    sourceMem.freeSpaceCount = source.countFreeSpace();
+                    sourceMem.freeSpaceCount = source.pos.countFreeSpace();
                 }
 
                 if (!sourceMem.containerLocation) {
