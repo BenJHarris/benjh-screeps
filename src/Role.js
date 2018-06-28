@@ -32,7 +32,7 @@ module.exports =
         }
 
         moveToTarget(target) {
-            return this.creep.moveToTarget(target);
+            return this.creep.moveTo(target);
         }
 
         run() {

@@ -44,6 +44,10 @@ module.exports = {
                 if (!scMem.y) {
                     scMem.y = sourceContainer ? sourceContainer.pos.y : null;
                 }
+
+                if (!('containerId' in sourceMem)) {
+                    sourceMem.containerId = null;
+                }
             }
         }
 
@@ -52,6 +56,26 @@ module.exports = {
         }
         //flag to say that room memory has been initialised
         Memory.rooms[name].init = true
+    },
+
+    run: (room) => {
+
+        for (let sourceId in room.memory.sources) {
+            let sourceMem = room.memory.sources[sourceId];
+            let x = sourceMem.containerLocation.x;
+            let y = sourceMem.containerLocation.y;
+            if (sourceMem.containerId === null &&
+                x !== null &&
+                y !== null) {
+                let containers = _.filter(room.lookForAt(LOOK_STRUCTURES, x, y,), (s) => {
+                    return s.structureType === STRUCTURE_CONTAINER
+                });
+                if (containers.length > 0) {
+                    sourceMem.containerId = containers[0].id;
+                }
+            }
+        }
+
     }
 
 

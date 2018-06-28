@@ -24,7 +24,7 @@ module.exports =
                 this.memory.status = Harvester.MOVE_TO_TARGET;
             }
             if (!this.memory.source) {
-                this.memory.source = this.creep.room.leastAssignedSource().id
+                this.memory.source = this.creep.room.leastAssignedSource('harvester').id
             }
             if (!this.memory.target) {
                 this.memory.target = this.memory.source;
@@ -66,7 +66,12 @@ module.exports =
                 target = Game.getObjectById(this.memory.target);
                 this.setStatus(Harvester.MOVE_TO_TARGET);
             }
+
             let source = Game.getObjectById(this.memory.source);
+            // check to see if there are any miner creeps assigned to the same source
+            if (source.getAssignedCreeps('miner') > 0) {
+                this.creep.suicide();
+            }
 
             if (state === Harvester.MOVE_TO_TARGET
             ) {
@@ -120,6 +125,8 @@ module.exports =
                     this.setStatus(Harvester.MOVE_TO_TARGET);
                     this.run();
                 }
+            } else {
+                throw new Error(`creep ${this.creep.name} in undefined state`);
             }
         }
     };

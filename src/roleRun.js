@@ -3,6 +3,7 @@
  */
 
 const Harvester = require('Harvester');
+const Miner = require('Miner');
 
 module.exports = () => {
 
@@ -10,7 +11,10 @@ module.exports = () => {
         let creep = Game.creeps[name];
         switch (creep.memory.role) {
             case 'harvester':
-                let harvester = new Harvester(creep);
+                new Harvester(creep);
+                break;
+            case 'miner':
+                new Miner(creep);
                 break;
         }
     }

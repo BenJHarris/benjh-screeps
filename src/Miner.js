@@ -19,28 +19,66 @@ module.exports =
             this.memory.status = Miner.MOVE_TO_TARGET;
         }
         if (!this.memory.source) {
-            this.memory.source = this.creep.room.leastAssignedSource().id
-        }
-        if (!this.memory.target) {
-            this.memory.target = this.memory.source;
+            this.memory.source = this.creep.room.leastAssignedSource('miner').id
         }
         if (!this.memory.harvestPosition) {
             this.memory.harvestPosition = {};
         }
-        if (!this.memory.harvestPosition) {
-            this.memory.harvestPosition.x = 0;
+        let containerPos = this.creep.room.memory.sources[this.memory.source].containerLocation;
+        if (!this.memory.harvestPosition.x) {
+            this.memory.harvestPosition.x = containerPos.x;
         }
-        if (!this.memory.harvestPosition) {
-            this.memory.harvestPosition.y = 0;
+        if (!this.memory.harvestPosition.y) {
+            this.memory.harvestPosition.y = containerPos.y;
         }
         this.run();
+    }
+
+    moveToTarget(target) {
+            let result = this.creep.moveTo(target);
+            console.log(this.creep.name);
+            console.log(target);
+            console.log(this.creep.pos);
+            if (target.isEqualTo(this.creep.pos)) {
+                return 1;
+            } else {
+                return result;
+            }
     }
 
     run() {
             let state = this.memory.status;
             let source = Game.getObjectById(this.memory.source);
-            let target = Game.getObjectById(this.memory.target);
+            let target = new RoomPosition(this.memory.harvestPosition.x, this.memory.harvestPosition.y,
+                this.creep.room.name);
 
+            if (state === Miner.MOVE_TO_TARGET) {
+                if (this.moveToTarget(target) > 0) {
+                    this.setStatus(Miner.HARVESTING);
+                    this.run();
+                }
+            } else if (state === Miner.HARVESTING) {
+                let siteContainer = this.creep.pos.findInRange(FIND_MY_CONSTRUCTION_SITES, 3, {
+                    filter: (s) => {
+                        return s.structureType === STRUCTURE_CONTAINER;
+                    }
+                });
+                if (siteContainer.length > 0) {
+                    this.buildStructure(siteContainer[0]);
+                }
+
+                let repairList = this.creep.pos.findInRange(FIND_MY_STRUCTURES, 3, {
+                    filter: (s) => s.hits < s.hitsMax
+                });
+
+                if (repairList.length > 0) {
+                    this.creep.repair(repairList[0]);
+                }
+
+                this.harvestSource(source);
+            } else {
+                throw new Error(`creep ${this.creep.name} in undefined state`);
+            }
 
     }
 

@@ -15,6 +15,7 @@ module.exports = () => {
         if (!room.memory['init']) {
             roomMemory.init(room);
         }
+        roomMemory.run(room);
     }
 
 };

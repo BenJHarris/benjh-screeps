@@ -108,14 +108,14 @@ module.exports = {
 
         let potentialSpots = source.pos.findFreeSpace();
         let spawn = room.findSpawns()[0];
-        console.log(potentialSpots);
         let containerLocation = spawn.pos.findClosestByPath(potentialSpots);
-        console.log(containerLocation);
 
-        // if (room.createConstructionSite(containerLocation, 3) === OK) {
-        //     room.memory[source.id].containerLocation = true;
-        // }
-        room.visual.circle(containerLocation);
+        if (room.createConstructionSite(containerLocation, STRUCTURE_CONTAINER) === OK) {
+            let sourceMem = room.memory.sources[source.id];
+            sourceMem.containerPlaced = true;
+            sourceMem.containerLocation.x = containerLocation.x;
+            sourceMem.containerLocation.y = containerLocation .y;
+        }
     }
 
 

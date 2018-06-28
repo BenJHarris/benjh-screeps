@@ -4,7 +4,34 @@
 
 module.exports = (room) => {
 
-    let requiredHarvesters = 5;
+    let requiredMiners = (() => {
+        let total = 0;
+
+        for (let source of room.findSources()) {
+            if (!(source.getAssignedCreeps('miner').length > 0)) {
+                total ++;
+            }
+        }
+        return total;
+    })();
+
+    let minerCreeps = room.findCreeps('miner');
+
+    if (minerCreeps.length < requiredMiners) {
+        room.findSpawns()[0].spawnMiner();
+    }
+
+    let requiredHarvesters = (() => {
+        let total = 0;
+
+        for (let source of room.findSources()) {
+            if (!(source.getAssignedCreeps('miner').length > 0)) {
+                total += room.memory.sources[source.id].freeSpaceCount;
+            }
+        }
+        return total;
+    })();
+
     let harvesterCreeps = room.findCreeps('harvester');
 
     if (harvesterCreeps.length < requiredHarvesters) {

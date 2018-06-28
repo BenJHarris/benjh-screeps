@@ -33,14 +33,7 @@ module.exports =
     }
 
     buildStructure(target) {
-        this.creep.build(target);
-    }
-
-    moveToTarget(target) {
-        if (!this.isEmpty()) {
-            this.repairClose();
-        }
-        return super.moveToTarget(target);
+        return this.creep.build(target);
     }
 
     repairClose() {
@@ -51,7 +44,6 @@ module.exports =
         });
         this.creep.repair(targets[0]);
     };
-
 
     transferEnergyToTarget(target) {
         return this.creep.transfer(target, RESOURCE_ENERGY);
@@ -64,6 +56,26 @@ module.exports =
                     s.structureType === STRUCTURE_EXTENSION) &&
                     s.energy < s.energyCapacity;
             }});
+    }
+
+    moveToTarget(target) {
+        if (!this.isEmpty()) {
+            this.repairClose();
+        }
+        if ((target.structureType && target.structureType === STRUCTURE_CONTROLLER) ||
+            target instanceof ConstructionSite) {
+            if (this.creep.pos.inRangeTo(target.pos, 3)) {
+                return 1;
+            } else {
+                return super.moveToTarget(target);
+            }
+        } else {
+            if (this.creep.pos.inRangeTo(target.pos, 1)) {
+                return 1
+            } else {
+                return super.moveToTarget(target);
+            }
+        }
     }
 
 };

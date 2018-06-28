@@ -15,9 +15,9 @@ module.exports = () => {
         return this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType === STRUCTURE_SPAWN});
     };
 
-    Room.prototype.leastAssignedSource = function() {
+    Room.prototype.leastAssignedSource = function(type) {
         return this.findSources().reduce((min, source) =>
-            source.getAssignedCreeps().length < min.getAssignedCreeps().length ? source : min);
+            source.getAssignedCreeps(type).length < min.getAssignedCreeps(type).length ? source : min);
     };
 
     Room.prototype.getLevel = function() {
@@ -53,16 +53,19 @@ module.exports = () => {
     };
 
     Room.prototype.findCreeps = function(type=undefined) {
-
         if (type === undefined) {
             return this.find(FIND_MY_CREEPS);
         } else {
             return this.find(FIND_MY_CREEPS, {
                 filter: (c) => {
-                    return c.memory.role;
+                    return c.memory.role === type;
                 }
             })
         }
+    },
+
+    Room.prototype.findHarvestContainers = function() {
+        let harvestContainers = [];
 
     }
 };
