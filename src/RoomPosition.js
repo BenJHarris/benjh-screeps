@@ -9,7 +9,6 @@ module.exports = () => {
      * @returns {number}
      */
     RoomPosition.prototype.countFreeSpace = function() {
-
         let freeSpaceCount = 8;
 
         for (let x = -1; x <= 1;  x++) {
@@ -38,14 +37,11 @@ module.exports = () => {
         return freeSpaceCount;
     };
 
-    RoomPosition.prototype.findClosestFromArr = function(posArray) {
-
-        for (pos of posArray) {
-            if (!pos instanceof RoomPosition) {
-                throw new Error('Array must only be roomPosition objects');
+    RoomPosition.prototype.containsInRange = function(range=1) {
+        return this.findInRange(FIND_STRUCTURES, range, {
+            filter: (s) => {
+                return s.structureType === STRUCTURE_CONTAINER;
             }
-        }
-
-
+        })
     }
 };

@@ -58,7 +58,6 @@ module.exports =
         }
 
         run() {
-
             let state = this.memory.status;
             let target = Game.getObjectById(this.memory.target);
             // fix in case a construction site gets built while a creep's target
