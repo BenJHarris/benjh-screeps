@@ -96,9 +96,10 @@ module.exports = {
             );
 
             for (pos of ret.path) {
-                // room.createConstructionSite(pos, STRUCTURE_ROAD);
-                room.visual.circle(pos);
+                room.createConstructionSite(pos, STRUCTURE_ROAD);
             }
+
+            room.memory.roadsPlaced = true;
 
         }
 
