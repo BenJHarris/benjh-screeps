@@ -102,7 +102,20 @@ module.exports = {
             room.memory.roadsPlaced = true;
 
         }
+    },
 
+    sourceContainer: (room, source) => {
+
+        let potentialSpots = source.pos.findFreeSpace();
+
+        let spawn = room.findSpawns()[0];
+        let containerLocation = spawn.pos.findClosestByPath(potentialSpots);
+
+        if (room.createConstructionSite(containerLocation, 3) === OK) {
+            room.memory[source.id].containerLocation = true;
+        }
     }
+
+
 };
 

@@ -2,8 +2,6 @@
  * Created by Benjamin Jed Harris on 23/06/2018.
  */
 
-const utility = require('utility');
-
 module.exports = {
 
     init: (room) => {

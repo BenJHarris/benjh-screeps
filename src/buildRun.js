@@ -17,6 +17,14 @@ module.exports = (room) => {
             build.roads(room);
         }
 
+        for (let sourceId in room.memory.sources) {
+            let sourceMem = room.memory.sources[sourceId];
+            if (sourceMem.containerPlaced === false) {
+                let source = Game.getObjectById(sourceId);
+                build.sourceContainer(room, source);
+            }
+        }
+
     }
 
 };
