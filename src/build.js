@@ -96,7 +96,8 @@ module.exports = {
             );
 
             for (pos of ret.path) {
-                room.createConstructionSite(pos, STRUCTURE_ROAD);
+                // room.createConstructionSite(pos, STRUCTURE_ROAD);
+                room.visual.circle(pos);
             }
 
         }
