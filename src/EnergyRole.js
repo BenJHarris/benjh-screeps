@@ -49,7 +49,7 @@ module.exports =
                 return s.structureType === STRUCTURE_ROAD && s.hits < s.hitsMax;
             }
         });
-        this.creep.repair(target[0]);
+        this.creep.repair(targets[0]);
     };
 
 
