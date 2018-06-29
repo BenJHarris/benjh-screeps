@@ -29,6 +29,39 @@ module.exports = () => {
         this.spawnCustom(body, memory);
     };
 
+    StructureSpawn.prototype.spawnSupplier = function() {
+
+        let config = this.room.getConfig().supplier;
+        let body = config.body;
+        let memory = {
+            role: 'supplier'
+        };
+
+        this.spawnCustom(body, memory);
+    };
+
+    StructureSpawn.prototype.spawnBuilder = function() {
+
+        let config = this.room.getConfig().builder;
+        let body = config.body;
+        let memory = {
+            role: 'builder'
+        };
+
+        this.spawnCustom(body, memory);
+    };
+
+    StructureSpawn.prototype.spawnUpgrader = function() {
+
+        let config = this.room.getConfig().upgrader
+        let body = config.body;
+        let memory = {
+            role: 'upgrader'
+        };
+
+        this.spawnCustom(body, memory);
+    };
+
     StructureSpawn.prototype.spawnCustom = function(bodyParts, roleMemory) {
 
         //check to see if creep is spawnable;

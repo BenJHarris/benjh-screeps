@@ -4,27 +4,26 @@
 
 module.exports = {
 
-
-    getObjectArrayById: function(idArray) {
-
-        objArray = [];
-
-        for (let id of idArray) {
-            objArray.push(objArray.push(Game.getObjectById(id)))
-        }
-        return objArray
-    },
-
-    getIdArrayByObjects: function (objArray) {
-
-        let idArray = [];
-
-        for (let obj of objArray ) {
-            idArray.push(obj.id);
+    createBody: (bodySingle, bodyRepeat, energy, bodyPriority) => {
+        if (!bodyPriority) {
+            bodyPriority = [WORK, CARRY, MOVE]
         }
 
-        return idArray;
+        const calcBodyCost = body => _.sum(body.map(p => BODYPART_COST[p]));
 
+        let bodySingleCost = calcBodyCost(bodySingle);
+        let bodyRepeatCost = calcBodyCost(bodyRepeat);
+
+        let availableEnergy = energy - bodySingleCost;
+        let repeatTimes = Math.floor(availableEnergy/bodyRepeatCost);
+
+        let bodyParts = [];
+        bodySingle.forEach((p) => bodyParts.push(p));
+        for (let i = 0; i < repeatTimes; i++) {
+            bodyRepeat.forEach((p) => bodyParts.push(p));
+        }
+
+        return bodyParts.sort((a, b) => bodyPriority.indexOf(a) - bodyPriority.indexOf(b))
     }
 
 };

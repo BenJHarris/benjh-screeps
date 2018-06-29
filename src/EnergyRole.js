@@ -50,6 +50,10 @@ module.exports =
         return this.creep.transfer(target, RESOURCE_ENERGY);
     }
 
+    withdrawEnergyFromTarget(target) {
+        return this.creep.withdraw(target, RESOURCE_ENERGY);
+    }
+
     findClosestEnergyDropOff() {
         return this.creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {
             filter: (s) => {

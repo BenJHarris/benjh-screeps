@@ -25,7 +25,7 @@ module.exports = () => {
     };
 
     Room.prototype.getConfig = function() {
-        return config.getForLevel(this.getLevel());
+        return config.getForRoom(this);
     };
 
     Room.prototype.structureCount = function(type, includeConstruction=true) {
@@ -62,10 +62,58 @@ module.exports = () => {
                 }
             })
         }
-    },
+    };
 
     Room.prototype.findHarvestContainers = function() {
         let harvestContainers = [];
 
+        let mem = this.memory.sources;
+        for (let sourceId in mem) {
+            let sourceMem = mem[sourceId];
+
+            let contId = sourceMem.containerId;
+            if (contId !== null) {
+                harvestContainers.push(Game.getObjectById(contId));
+            }
+        }
+
+        return harvestContainers.sort((a, b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY] );
+
+    };
+
+    Room.prototype.findUpgradePositions = function() {
+        if (this.memory.controllerContainer.id === null) {
+            return [];
+        }
+
+        let positions = [];
+
+        let container = Game.getObjectById(this.memory.controllerContainer.id);
+        console.log(container);
+        let freeSpaces = container.pos.findFreeSpace();
+
+        for (let space of freeSpaces) {
+            if (space.inRangeTo(this.controller, 3)) {
+                positions.push(space);
+            }
+        }
+        return positions;
+    };
+
+    Room.prototype.findAvailableUpgradePositions = function() {
+        let available = [];
+        let positions = this.findUpgradePositions();
+        console.log(positions);
+        let upgraders = this.findCreeps('upgrader');
+        positions.forEach((p) => {
+            let x = p.x;
+            let y = p.y;
+            upgraders.forEach((c) => {
+                if (c.memory.upgradePosition.x !== x && c.memory.upgradePosition.y !== y) {
+                    available.push(p);
+                }
+            })
+        });
+        return available;
     }
 };

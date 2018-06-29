@@ -7,6 +7,8 @@ const buildRun = require ('buildRun');
 
 module.exports.loop = () => {
 
+    console.log(`---------- Game tick ${Game.time} ----------`);
+
     manageMemory();
     roleRun();
 

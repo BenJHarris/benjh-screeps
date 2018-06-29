@@ -36,9 +36,6 @@ module.exports =
 
     moveToTarget(target) {
             let result = this.creep.moveTo(target);
-            console.log(this.creep.name);
-            console.log(target);
-            console.log(this.creep.pos);
             if (target.isEqualTo(this.creep.pos)) {
                 return 1;
             } else {
@@ -67,8 +64,8 @@ module.exports =
                     this.buildStructure(siteContainer[0]);
                 }
 
-                let repairList = this.creep.pos.findInRange(FIND_MY_STRUCTURES, 3, {
-                    filter: (s) => s.hits < s.hitsMax
+                let repairList = this.creep.pos.findInRange(FIND_STRUCTURES, 3, {
+                    filter: (s) => s.structureType === STRUCTURE_CONTAINER && s.hits < s.hitsMax
                 });
 
                 if (repairList.length > 0) {

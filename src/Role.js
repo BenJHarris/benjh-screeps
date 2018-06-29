@@ -14,9 +14,6 @@ module.exports =
             if (!this.memory) {
                 this.memory = {};
             }
-            if (!this.memory.spawn) {
-                this.memory.spawn = this.creep.room.findSpawns()[0].id;
-            }
         }
 
         setStatus(status) {

@@ -69,8 +69,9 @@ module.exports =
 
             let source = Game.getObjectById(this.memory.source);
             // check to see if there are any miner creeps assigned to the same source
-            if (source.getAssignedCreeps('miner') > 0) {
-                this.creep.suicide();
+            if (source.getAssignedCreeps('miner').length > 0) {
+                this.creep.memory = {};
+                this.creep.memory.role = 'supplier';
             }
 
             if (state === Harvester.MOVE_TO_TARGET
