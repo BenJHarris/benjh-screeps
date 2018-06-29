@@ -39,7 +39,8 @@ module.exports =
     repairClose() {
         let targets = this.creep.pos.findInRange(FIND_STRUCTURES, 3, {
             filter: (s) => {
-                return s.structureType === STRUCTURE_ROAD && s.hits < s.hitsMax;
+                return (s.structureType === STRUCTURE_ROAD && s.hits < s.hitsMax) ||
+                    (s.structureType === STRUCTURE_CONTAINER && s.hits < s.hitsMax)
             }
         });
         this.creep.repair(targets[0]);
