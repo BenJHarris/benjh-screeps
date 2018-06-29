@@ -76,6 +76,7 @@ module.exports = (room) => {
         for (let source of room.findSources()) {
             if (source.getAssignedCreeps('miner').length === 0 &&
             source.getAssignedCreeps('harvester').length < room.memory.sources[source.id].freeSpaceCount) {
+
                 total += room.memory.sources[source.id].freeSpaceCount;
             }
         }

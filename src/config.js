@@ -32,7 +32,6 @@ module.exports = {
                             return room.energyCapacityAvailable;
                         }
                     })();
-
                     return utility.createBody(bodySingle, bodyRepeat, energyMax);
                 })()
             },
