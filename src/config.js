@@ -23,9 +23,15 @@ module.exports = {
             },
             supplier: {
                 body: (() => {
-                    let bodySingle = [WORK];
+                    let bodySingle = [WORK, MOVE];
                     let bodyRepeat = [MOVE, CARRY];
-                    let energyMax = room.energyCapacityAvailable;
+                    let energyMax = (() => {
+                        if (room.findCreeps('supplier').length === 0) {
+                            return room.energyAvailable;
+                        } else {
+                            return room.energyCapacityAvailable;
+                        }
+                    })();
 
                     return utility.createBody(bodySingle, bodyRepeat, energyMax);
                 })()

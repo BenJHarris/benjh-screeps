@@ -16,6 +16,9 @@ module.exports = {
 
         let availableEnergy = energy - bodySingleCost;
         let repeatTimes = Math.floor(availableEnergy/bodyRepeatCost);
+        if (repeatTimes === 0) {
+            repeatTimes = 1;
+        }
 
         let bodyParts = [];
         bodySingle.forEach((p) => bodyParts.push(p));
