@@ -34,11 +34,12 @@ module.exports = (room) => {
 
     //upgraders
     let requiredUpgraders = (() => {
-        if (room.memory.controllerContainer.id !== null) {
-            return 3 - room.findCreeps('upgrader').length;
-        } else {
-            return 0;
-        }
+            if (room.memory.controllerContainer.id !== null &&
+            Game.getObjectById(room.memory.controllerContainer.id).store[RESOURCE_ENERGY] > 0) {
+                return 3 - room.findCreeps('upgrader').length;
+            } else {
+                return 0;
+            }
     })();
 
     console.log(`requiredUpgraders: ${requiredUpgraders}`);
@@ -74,7 +75,8 @@ module.exports = (room) => {
 
         for (let source of room.findSources()) {
             if (source.getAssignedCreeps('miner').length === 0 &&
-            source.getAssignedCreeps('harvester') < room.memory.sources[source.id].freeSpaceCount) {
+            source.getAssignedCreeps('harvester').length < room.memory.sources[source.id].freeSpaceCount) {
+
                 total += room.memory.sources[source.id].freeSpaceCount;
             }
         }

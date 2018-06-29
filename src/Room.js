@@ -116,7 +116,6 @@ module.exports = () => {
                 available.push(p);
             }
         });
-        console.log(available);
         return available;
     }
 };
