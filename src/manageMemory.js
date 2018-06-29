@@ -12,9 +12,11 @@ module.exports = () => {
 
     for (let name in Game.rooms) {
         let room = Game.rooms[name];
+
         if (!room.memory['init']) {
             roomMemory.init(room);
         }
+        roomMemory.run(room);
     }
 
 };

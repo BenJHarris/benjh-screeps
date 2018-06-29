@@ -107,14 +107,40 @@ module.exports = {
     sourceContainer: (room, source) => {
 
         let potentialSpots = source.pos.findFreeSpace();
-
         let spawn = room.findSpawns()[0];
         let containerLocation = spawn.pos.findClosestByPath(potentialSpots);
 
-        if (room.createConstructionSite(containerLocation, 3) === OK) {
-            room.memory[source.id].containerLocation = true;
+        if (room.createConstructionSite(containerLocation, STRUCTURE_CONTAINER) === OK) {
+            let sourceMem = room.memory.sources[source.id];
+            sourceMem.containerPlaced = true;
+            sourceMem.containerLocation.x = containerLocation.x;
+            sourceMem.containerLocation.y = containerLocation .y;
         }
+    },
+
+    upgradeContainer: (room) => {
+
+        let potentialSpots = room.controller.pos.findFreeSpace(3);
+        let locationFound = false;
+
+        while (!locationFound) {
+            let spawn = room.findSpawns()[0];
+            let potentialLocation = spawn.pos.findClosestByPath(potentialSpots);
+            let potentialUpgradeSpots = potentialLocation.findFreeSpace(1);
+            if (_.sum(potentialUpgradeSpots.map((s) => s.inRangeTo(room.controller, 3) ? 1 : 0)) > 3) {
+                if (room.createConstructionSite(potentialLocation, STRUCTURE_CONTAINER) === OK) {
+                    room.memory.controllerContainer.x = potentialLocation.x;
+                    room.memory.controllerContainer.y = potentialLocation.y;
+                    room.memory.controllerContainer.containerPlaced = true;
+                    locationFound = true;
+                }
+            } else {
+                potentialSpots.splice(potentialSpots.indexOf(potentialLocation), 1);
+            }
+        }
+
     }
+
 
 
 };

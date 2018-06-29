@@ -15,9 +15,9 @@ module.exports = () => {
         return this.find(FIND_MY_STRUCTURES, {filter: (s) => s.structureType === STRUCTURE_SPAWN});
     };
 
-    Room.prototype.leastAssignedSource = function() {
+    Room.prototype.leastAssignedSource = function(type) {
         return this.findSources().reduce((min, source) =>
-            source.getAssignedCreeps().length < min.getAssignedCreeps().length ? source : min);
+            source.getAssignedCreeps(type).length < min.getAssignedCreeps(type).length ? source : min);
     };
 
     Room.prototype.getLevel = function() {
@@ -25,7 +25,7 @@ module.exports = () => {
     };
 
     Room.prototype.getConfig = function() {
-        return config.getForLevel(this.getLevel());
+        return config.getForRoom(this);
     };
 
     Room.prototype.structureCount = function(type, includeConstruction=true) {
@@ -53,16 +53,70 @@ module.exports = () => {
     };
 
     Room.prototype.findCreeps = function(type=undefined) {
-
         if (type === undefined) {
             return this.find(FIND_MY_CREEPS);
         } else {
             return this.find(FIND_MY_CREEPS, {
                 filter: (c) => {
-                    return c.memory.role;
+                    return c.memory.role === type;
                 }
             })
         }
+    };
 
+    Room.prototype.findHarvestContainers = function() {
+        let harvestContainers = [];
+
+        let mem = this.memory.sources;
+        for (let sourceId in mem) {
+            let sourceMem = mem[sourceId];
+
+            let contId = sourceMem.containerId;
+            if (contId !== null) {
+                harvestContainers.push(Game.getObjectById(contId));
+            }
+        }
+
+        return harvestContainers.sort((a, b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY] );
+
+    };
+
+    Room.prototype.findUpgradePositions = function() {
+        if (this.memory.controllerContainer.id === null) {
+            return [];
+        }
+
+        let positions = [];
+
+        let container = Game.getObjectById(this.memory.controllerContainer.id);
+        let freeSpaces = container.pos.findFreeSpace();
+
+        for (let space of freeSpaces) {
+            if (space.inRangeTo(this.controller, 3)) {
+                positions.push(space);
+            }
+        }
+        return positions;
+    };
+
+    Room.prototype.findAvailableUpgradePositions = function() {
+        let available = [];
+        let positions = this.findUpgradePositions();
+        let upgraders = this.findCreeps('upgrader');
+        positions.forEach((p) => {
+            let x = p.x;
+            let y = p.y;
+            let taken = false;
+            upgraders.forEach((c) => {
+                if ((c.memory.upgradePosition.x !== x && c.memory.upgradePosition.y !== y)) {
+                    taken = true
+                }
+            });
+            if (!taken) {
+                available.push(p);
+            }
+        });
+        console.log(available);
+        return available;
     }
 };

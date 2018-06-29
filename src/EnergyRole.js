@@ -33,28 +33,25 @@ module.exports =
     }
 
     buildStructure(target) {
-        this.creep.build(target);
-    }
-
-    moveToTarget(target) {
-        if (!this.isEmpty()) {
-            this.repairClose();
-        }
-        return super.moveToTarget(target);
+        return this.creep.build(target);
     }
 
     repairClose() {
         let targets = this.creep.pos.findInRange(FIND_STRUCTURES, 3, {
             filter: (s) => {
-                return s.structureType === STRUCTURE_ROAD && s.hits < s.hitsMax;
+                return (s.structureType === STRUCTURE_ROAD && s.hits < s.hitsMax) ||
+                    (s.structureType === STRUCTURE_CONTAINER && s.hits < s.hitsMax)
             }
         });
         this.creep.repair(targets[0]);
     };
 
-
     transferEnergyToTarget(target) {
         return this.creep.transfer(target, RESOURCE_ENERGY);
+    }
+
+    withdrawEnergyFromTarget(target) {
+        return this.creep.withdraw(target, RESOURCE_ENERGY);
     }
 
     findClosestEnergyDropOff() {
@@ -64,6 +61,26 @@ module.exports =
                     s.structureType === STRUCTURE_EXTENSION) &&
                     s.energy < s.energyCapacity;
             }});
+    }
+
+    moveToTarget(target) {
+        if (!this.isEmpty()) {
+            this.repairClose();
+        }
+        if ((target.structureType && target.structureType === STRUCTURE_CONTROLLER) ||
+            target instanceof ConstructionSite) {
+            if (this.creep.pos.inRangeTo(target.pos, 3)) {
+                return 1;
+            } else {
+                return super.moveToTarget(target);
+            }
+        } else {
+            if (this.creep.pos.inRangeTo(target.pos, 1)) {
+                return 1
+            } else {
+                return super.moveToTarget(target);
+            }
+        }
     }
 
 };

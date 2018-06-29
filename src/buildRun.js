@@ -25,6 +25,11 @@ module.exports = (room) => {
             }
         }
 
+        let ccMem = room.memory.controllerContainer;
+        if (ccMem.containerPlaced === false) {
+            build.upgradeContainer(room);
+        }
+
     }
 
 };

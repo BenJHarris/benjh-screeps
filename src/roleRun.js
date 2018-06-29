@@ -3,6 +3,10 @@
  */
 
 const Harvester = require('Harvester');
+const Miner = require('Miner');
+const Supplier = require('Supplier');
+const Builder = require('Builder');
+const Upgrader = require('Upgrader');
 
 module.exports = () => {
 
@@ -10,7 +14,19 @@ module.exports = () => {
         let creep = Game.creeps[name];
         switch (creep.memory.role) {
             case 'harvester':
-                let harvester = new Harvester(creep);
+                new Harvester(creep);
+                break;
+            case 'miner':
+                new Miner(creep);
+                break;
+            case 'supplier':
+                new Supplier(creep);
+                break;
+            case 'builder':
+                new Builder(creep);
+                break;
+            case 'upgrader':
+                new Upgrader(creep);
                 break;
         }
     }
