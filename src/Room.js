@@ -89,7 +89,6 @@ module.exports = () => {
         let positions = [];
 
         let container = Game.getObjectById(this.memory.controllerContainer.id);
-        console.log(container);
         let freeSpaces = container.pos.findFreeSpace();
 
         for (let space of freeSpaces) {
@@ -103,17 +102,21 @@ module.exports = () => {
     Room.prototype.findAvailableUpgradePositions = function() {
         let available = [];
         let positions = this.findUpgradePositions();
-        console.log(positions);
         let upgraders = this.findCreeps('upgrader');
         positions.forEach((p) => {
             let x = p.x;
             let y = p.y;
+            let taken = false;
             upgraders.forEach((c) => {
-                if (c.memory.upgradePosition.x !== x && c.memory.upgradePosition.y !== y) {
-                    available.push(p);
+                if ((c.memory.upgradePosition.x !== x && c.memory.upgradePosition.y !== y)) {
+                    taken = true
                 }
-            })
+            });
+            if (!taken) {
+                available.push(p);
+            }
         });
+        console.log(available);
         return available;
     }
 };

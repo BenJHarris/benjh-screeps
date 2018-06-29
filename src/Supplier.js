@@ -32,7 +32,6 @@ module.exports =
                 this.withdrawEnergyFromTarget(target);
                 if (!this.isEmpty()) {
                     this.setStatus(Supplier.MOVE_TO_DROPOFF);
-                    this.run();
                 }
             }
         } else if (state === Supplier.MOVE_TO_DROPOFF) {
@@ -48,7 +47,6 @@ module.exports =
                 } else {
                     this.setTarget(this.creep.room.findHarvestContainers()[0].id);
                     this.setStatus(Supplier.MOVE_TO_ENERGY);
-                    this.run();
                 }
             }
         } else {

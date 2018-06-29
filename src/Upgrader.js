@@ -16,7 +16,6 @@ module.exports =
         constructor(creep) {
             super(creep);
             let freeSpot = this.creep.room.findAvailableUpgradePositions()[0];
-            console.log(freeSpot);
             if (!this.memory.status) {
                 this.memory.status = Upgrader.MOVE_TO_POSITION;
             }
